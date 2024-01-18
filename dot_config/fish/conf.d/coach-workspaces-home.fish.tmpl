@@ -1,0 +1,36 @@
+# This file is managed by chezmoi in {{ .chezmoi.sourceFile }}. DO NOT EDIT directly.
+# To modify, use `chezmoi edit ~/.config/fish/conf.d/netspective-labs-home.fish --apply`. 
+
+# CWS should used for all Coach Workspaces (CWS) env-vars
+export IS_CWS=1
+export IS_CWS_WSL=0
+
+{{- if (index . "git") }}
+{{-     if (index . "git" "credential") }}
+{{-         if (index . "git" "credential" "helpers") }}
+{{-             if (index . "git" "credential" "helpers" "static") }}
+{{-                 range $key, $elem := .git.credential.helpers.static }}
+
+# {{$elem.site}} env vars generated from chezmoi data
+export CWS_{{$key}}_USERNAME="{{$elem.username}}"
+export CWS_{{$key}}_PASSWORD="{{$elem.password}}"
+export CWS_{{$key}}_HTTP_AUTHZ="{{$elem.username}}:{{$elem.password}}"
+
+{{-                 end }}
+{{-             end }}
+{{-         end }}
+{{-     end }}
+{{- end }}
+
+set osVersion (cat /proc/version | string split0)
+if string match -rq "(Microsoft|WSL)" $osVersion
+    if string match -rq WSL2 $osVersion
+        export IS_CWS_WSL=2
+    else
+        export IS_CWS_WSL=1
+    end
+end
+
+# easier to understand name for eget (easier to use with fish auto-complete if you remember "github")
+alias github-fetch-rel eget
+alias reset-greeting "chezmoi state delete-bucket --bucket=fishGreeting"

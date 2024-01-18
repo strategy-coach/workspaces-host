@@ -1,0 +1,26 @@
+# This file is managed by chezmoi in {{ .chezmoi.sourceFile }}. DO NOT EDIT directly.
+# To modify, use `chezmoi edit ~/.eget.toml --apply`.
+
+# see https://github.com/zyedidia/eget#configuration
+[global]
+  target = "~/bin"
+{{- if (index . "github") }}
+{{- if (index . "github" "user") }}
+{{- if (index . "github" "user" "prime" "pat") }}
+  github_token = "{{ .github.user.prime.pat }}"
+{{- else}}
+  # '.github.user.prime.pat' required in chezmoi.toml if this is desired:
+  # github_token = "ghp_1234567890"
+{{- end}}
+{{- end}}
+{{- end}}
+  quiet = false
+  show_hash = false
+  upgrade_only = false
+
+# If any of the following GitHub binaries are available in the pkgx pantry, switch from eget to pkgx
+# --------------------------------------------------------------------------------------------------
+# `run_after_dot_eget.toml.sh` will be executed by chezmoi if this file is edited and applied.
+# --------------------------------------------------------------------------------------------------
+# - the keys `cws_repo_url` and `cwh_description` are not recognized by `eget`,
+# - the Coach Workspaces (CWS) documentation system uses those for coach-doctor.ts

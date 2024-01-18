@@ -26,11 +26,12 @@
     # add [data.github.user.prime.*] if you want the following in .gitconfig:
     # [url "https://gitHubUserHandle:PERSONAL_ACCESS_TOKEN_VALUE@github.com"]
     #    insteadOf = https://github.com    
+
     # add [data.github.user.prime.pat] if you want the following:
     #    in `.eget.toml`:
-    #        github_token = "{{ .github.user.prime.pat }}"
+    #        github_token = "{ .github.user.prime.pat }"
     #    in `dot_config/fish/conf.d/chezmoi.fish.tmpl`:
-    #        export CHEZMOI_GITHUB_ACCESS_TOKEN="{{ .github.user.prime.pat }}"
+    #        export CHEZMOI_GITHUB_ACCESS_TOKEN="{ .github.user.prime.pat }"
     [data.github.user.prime]
         id = 'gitHubUserHandle'
         pat = 'PERSONAL_ACCESS_TOKEN_VALUE'

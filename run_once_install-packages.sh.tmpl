@@ -8,8 +8,8 @@ set -uo pipefail
 # `run_once_install-packages.sh.tmpl` changes; because this file can be run multiple times, be sure 
 # all commands/tasks in this file can safely be run more than once.
 # -------------------------------------------------------------------------------------------------
-# * Use relative paths to find binaries (e.g. ~/bin/xyz) and don't assume anything is in PATH
-# * If you add/remove packages be sure to reflect it in `~/bin/coach-doctor.ts`.
+# * Use relative paths to find binaries (e.g. ~/.local/bin/xyz) and don't assume anything is in PATH
+# * If you add/remove packages be sure to reflect it in `~/.local/bin/coach-doctor.ts`.
 # -------------------------------------------------------------------------------------------------
 # If you want to force-run this script after you've updated configs:
 #   chezmoi state delete-bucket --bucket=scriptState
@@ -33,3 +33,22 @@ export GITHUB_API_TOKEN="{{ .github.user.prime.pat }}"
 {{-   end}}
 {{- end}}
 
+# TODO: Deno was already installed by `pkgx` but `deno` must be in a "normal" path for VS Code, etc.??
+# rm -f $HOME/bin/deno && ln -s $HOME/.asdf/shims/deno $HOME/bin/deno    
+
+# TODO: add all these into `coach-doctor.ts`
+
+# https://api.github.com/repos/hayd/deno-udd (`udd`) is a Deno package to update dependencies
+export UDD_VERSION=`curl -fsSL https://api.github.com/repos/hayd/deno-udd/tags | jq '.[0].name' -r`
+deno install -A -f -n udd https://deno.land/x/udd@${UDD_VERSION}/main.ts
+
+# Netspective Labs SQLa `pgpass.ts` parses and allows PostgreSQL connection lookups
+export SQLa_VERSION=`curl -fsSL https://api.github.com/repos/netspective-labs/sql-aide/tags | jq '.[0].name' -r`
+deno install -A -f --unstable https://raw.githubusercontent.com/netspective-labs/sql-aide/${SQLa_VERSION}/lib/postgres/pgpass/pgpass.ts
+
+curl -fsSL "https://raw.githubusercontent.com/pnikosis/semtag/master/semtag" > ~/.local/bin/git-semtag
+chmod +x ~/.local/bin/git-semtag
+curl -fsSL "https://raw.githubusercontent.com/fboender/multi-git-status/master/mgitstatus" > ~/.local/bin/git-mgitstatus
+chmod +x ~/.local/bin/git-mgitstatus
+curl -fsSL "https://raw.githubusercontent.com/kamranahmedse/git-standup/master/git-standup" > ~/.local/bin/git-standup
+chmod +x ~/.local/bin/git-standup

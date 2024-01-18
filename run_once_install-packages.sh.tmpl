@@ -38,13 +38,9 @@ export GITHUB_API_TOKEN="{{ .github.user.prime.pat }}"
 
 # TODO: add all these into `coach-doctor.ts`
 
-# https://api.github.com/repos/hayd/deno-udd (`udd`) is a Deno package to update dependencies
-export UDD_VERSION=`curl -fsSL https://api.github.com/repos/hayd/deno-udd/tags | jq '.[0].name' -r`
-deno install -A -f -n udd https://deno.land/x/udd@${UDD_VERSION}/main.ts
-
 # Netspective Labs SQLa `pgpass.ts` parses and allows PostgreSQL connection lookups
 export SQLa_VERSION=`curl -fsSL https://api.github.com/repos/netspective-labs/sql-aide/tags | jq '.[0].name' -r`
-deno install -A -f --unstable https://raw.githubusercontent.com/netspective-labs/sql-aide/${SQLa_VERSION}/lib/postgres/pgpass/pgpass.ts
+~/.local/bin/deno install -A -f --unstable https://raw.githubusercontent.com/netspective-labs/sql-aide/${SQLa_VERSION}/lib/postgres/pgpass/pgpass.ts
 
 curl -fsSL "https://raw.githubusercontent.com/pnikosis/semtag/master/semtag" > ~/.local/bin/git-semtag
 chmod +x ~/.local/bin/git-semtag

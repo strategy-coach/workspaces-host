@@ -46,7 +46,7 @@ tasks (like for engineering environments):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sigoden/upt/main/install.sh | sudo sh -s -- --to /usr/local/bin
-sudo upt install -y unzip git
+sudo upt install -y unzip git git-extras
 curl -Ssf https://pkgx.sh | sh
 pkgx install fishshell.com chezmoi.io deno.land eget
 ```

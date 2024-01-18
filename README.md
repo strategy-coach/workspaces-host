@@ -35,8 +35,10 @@ been tested on Debian-based distros (e.g. Kali Linux and Ubuntu 20.04 LTS).
 
 ## One-time setup
 
+Install `curl` and `wget` using OS package manager before continuing. This
+should be the only distro-specific installation required.
+
 ```bash
-# Debian distro-specific, install curl and wget using OS package manager
 sudo apt-get -qq update && sudo apt-get install -qq -y curl wget
 ```
 
@@ -46,23 +48,23 @@ tasks (like for engineering environments):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/sigoden/upt/main/install.sh | sudo sh -s -- --to /usr/local/bin
-sudo upt install -y unzip git git-extras
+sudo upt install -y unzip git git-extras libatomic1 jq
 curl -Ssf https://pkgx.sh | sh
-pkgx install fishshell.com chezmoi.io deno.land eget
+pkgx install fishshell.com deno.land eget direnv.net crates.io/zoxide crates.io/exa
 ```
 
 Install `chezmoi` and generate configuration files based on values in Strategy
 Coach Workspaces Host `chezmoi` templates:
 
 ```bash
-sh -c "$(curl -fsSL git.io/chezmoi)" -- init --apply strategy-coach/workspaces-host
+sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply strategy-coach/workspaces-host
 ```
 
 After `chezmoi` is initialized, edit the config file with your configuration:
 
 ```bash
 vim.tiny ~/.config/chezmoi/chezmoi.toml
-chez apply
+~/.local/bin/chezmoi apply
 ```
 
 We prefer `Fish` as the default shell and `Oh My Posh` as the CLI prompts theme
@@ -71,7 +73,8 @@ configuration. You should switch your user's default shell to `Fish` by running:
 
 ```bash
 curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
-chsh -s /usr/bin/fish
+echo "$HOME/.local/bin/fish" | sudo tee -a /etc/shells
+chsh -s ~/.local/bin/fish
 exit
 ```
 

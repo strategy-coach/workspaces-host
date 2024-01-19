@@ -50,7 +50,7 @@ tasks (like for engineering environments):
 curl -fsSL https://raw.githubusercontent.com/sigoden/upt/main/install.sh | sudo sh -s -- --to /usr/local/bin
 sudo upt install -y unzip git git-extras libatomic1 jq
 curl -Ssf https://pkgx.sh | sh
-pkgx install fishshell.com deno.land eget direnv.net crates.io/zoxide crates.io/exa @gopasspw/gopass
+pkgx install fishshell.com deno.land eget direnv.net crates.io/zoxide crates.io/exa github.com/gopasspw/gopass
 ```
 
 Install `chezmoi` and generate configuration files based on values in Strategy

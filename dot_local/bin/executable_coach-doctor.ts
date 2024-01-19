@@ -146,7 +146,13 @@ export const checkup = doctor(function* () {
         });
         await report({ ensure: { cmd: "pkgx" } });
         await report({ ensure: { cmd: "eget" } });
-        await report({ ensure: { cmd: "gopass" } });
+        await report({
+          ensure: {
+            cmd: "gopass",
+            cmdVersion: async (cmd) =>
+              firstWords(await $`${cmd} --version`.text(), 3),
+          },
+        });
         await report({ ensure: { cmd: "pgpass" } });
         await report({
           ensure: {

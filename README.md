@@ -110,14 +110,12 @@ _Contributing_ section below.</mark>
 There are a few chezmoi-managed scripts that are automatically run when
 necessary:
 
-- `run_once_dot_eget.toml.sh.tmpl`
 - `run_once_install-packages.sh.tmpl`
 
 These and other "managed" scripts show up like this:
 
 ```bash
 $ chezmoi managed | grep '\.sh$'
-.eget.toml.sh
 install-packages.sh
 ```
 
@@ -283,12 +281,6 @@ highlights:
 - `XDG_CACHE_HOME` (defined in `dot_config/fish/config.fish`)
 - `IS_CWS` and `IS_CWS_WSL` (defined in
   `dot_config/fish/conf.d/coach-workspaces-home.fish`)
-- `DENO_INSTALL` (defined in `dot_config/fish/conf.d/deno.fish`)
-- `MANAGED_GIT_WORKSPACES_HOME` (defined in `direnv` `.envrc` for `mGit`
-  workspaces)
-- `NPM_AUTH_TOKEN` set to GitHub token if supplied in
-  `.config/chezmoi/chezmoi.toml` (defined in
-  `dot_config/fish/conf.d/npm.fish.tmpl`)
 
 ### PATH
 
@@ -367,12 +359,6 @@ other languages too:
 The only downside to using Rust, Go, etc. as scripting languages is that we need
 to have compilers available.
 
-## Consider PocketBase.io as built-in BaaS
-
-Instead of using `simple-http-server` switch to
-[PocketBase.io](https://PocketBase.io) in case we need a built-in BaaS in
-home-polyglot.
-
 ## Create CLI completions for `psql` and other commands
 
 `strategy-coach/workspaces-host/lib/postgres/pgpass/pgpass.ts` has a TODO which
@@ -420,9 +406,3 @@ database-specific functionality as well as other packages.
   conventions, and software, which creates a union file system across S3,
   WebDAV, K8s, and other storage providers.
 
-## Evaluate pueue to processes a queue of shell commands
-
-[Pueue](https://github.com/Nukesor/pueue) is a command-line task management tool
-for sequential and parallel execution of long-running tasks. There is also
-`pueued` daemon, with runs processes runs in the background (no need to be
-logged in).

@@ -50,7 +50,7 @@ tasks (like for engineering environments):
 curl -fsSL https://raw.githubusercontent.com/sigoden/upt/main/install.sh | sudo sh -s -- --to /usr/local/bin
 sudo upt install -y unzip git git-extras libatomic1 jq
 curl -Ssf https://pkgx.sh | sh
-pkgx install fishshell.com deno.land eget direnv.net crates.io/zoxide crates.io/exa
+pkgx install fishshell.com deno.land eget direnv.net crates.io/zoxide crates.io/exa @gopasspw/gopass
 ```
 
 Install `chezmoi` and generate configuration files based on values in Strategy
@@ -90,6 +90,8 @@ using your Coach Workspaces (CWS).
 - `$HOME/.pgpass` should follow
   [PostgreSQL .pgpass](https://tableplus.com/blog/2019/09/how-to-use-pgpass-in-postgresql.html)
   rules for password management.
+- [gopass](https://www.gopass.pw/) should be used for general password
+  management.
 
 ## Maintenance
 
@@ -135,65 +137,6 @@ See
 [Clear the state of run_once_ scripts](https://www.chezmoi.io/user-guide/use-scripts-to-perform-actions/#clear-the-state-of-run_once_-scripts)
 in `chezmoi` documentation for more information about how to force execution of
 scripts instead of using memoized state.
-
-### Contributing to `workspaces-host` project
-
-To see which files are _managed_ by `chezmoi` run `chezmoi managed`. Never edit
-any managed without using `chezmoi edit` or opening the files in the `chezmoi`
-source directory. Use `chezmoi edit <managed-file> --apply` like
-`chezmoi edit ~/.config/fish/config.fish --apply` when you want to make quick
-edits to individual files and apply the changes immediately.
-
-An easier way to modify these file is to use VS Code to edit and manage
-`chezmoi` templates and configurations using the `chezmoi cd && code .`.
-
-Be sure to follow the
-[chezmoi workflows for editing configuration files](https://www.chezmoi.io/user-guide/command-overview/#daily-commands)
-and use `chezmoi apply` locally to do your testing.
-
-Whenver possible, create `chezmoi` _templates_ that generate configs (especially
-when secrets are involved, like in `.gitconfig`).
-
-PRs are welcome. If you're making changes directly (without a PR), after
-updating and before pushing code, tag the release:
-
-```bash
-chezmoi cd
-# <git commit ...>
-git-semtag final && git push
-# or git-semtag final -v "vN.N.N" && git push
-```
-
-#### Community dotfiles projects to learn from
-
-Study these
-[chezmoi-tagged repos](https://github.com/topics/chezmoi?o=desc&s=stars):
-
-- https://github.com/twpayne/dotfiles
-- https://github.com/felipecrs/dotfiles
-- https://github.com/renemarc/dotfiles
-
-They will have good ideas about how to properly create fully configurable `home`
-directories across all of our polyglot engineering stations.
-
-#### Documenting `home-polyglot` project
-
-A project is only as useful as its documentation so if you contribute to or
-modify code in this repo be sure to document it using this priority:
-
-- Follow guidance and conventions for Fish (e.g. use `~/.config/fish/*`
-  locations), `chezmoi`, `pkgx`, `direnv`, etc. so that developers can easily
-  understand your work
-- Add comments to scripts that explain not just what is being done but, more
-  importantly, _why_
-- Whenever possible, explain concepts through visualizations using Draw.io (or
-  D2/PlantUML/[diagram-as-code](https://text-to-diagram.com/) utilities).
-  - Instead of Visio or any other desktop-based tools please use the
-    [hediet.vscode-drawio](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio)
-    VS code extension's `*.drawio.svg` and `*.drawio.png` capabilities. This
-    allows you to edit the Draw.io files visually but an `.svg` or `.png` is
-    automatically created for the repo (which can then be referenced/linked in
-    Markdown like README.me).
 
 ## GitHub Binary Releases Management
 
@@ -255,8 +198,8 @@ highlights:
   need to perform shell manipulation, `deno` with
   [dax](https://github.com/dsherret/dax) is preferred over making system calls
   in `deno`.
-- We use [pass](https://www.passwordstore.org/) the standard unix password
-  manager for managing secrets that should not be in plaintext.
+- We use [gopass](https://www.gopass.pw/) for managing secrets that should not
+  be in plaintext.
 - We use `osQuery`, `cnquery`, `steampipe`, et. al. system and endpoint
   observabilty tools for SOC2 and other compliance requirements
 
@@ -311,81 +254,3 @@ are possible.
 There are some
 [direnv YouTube videos](https://www.youtube.com/results?search_query=direnv)
 worth watching to get familar with the capabilities.
-
-# Guidance and education
-
-- Use
-  [Single\-file scripts that download their dependencies](https://dbohdan.com/scripts-with-dependencies)
-  as a guide for learning how to create portable scripts (especially
-  [Anything with a Nix package](https://dbohdan.com/scripts-with-dependencies#anything-with-a-nix-package)).
-
-# TODO (Roadmap)
-
-## Implement `gopass` and `summon` integration to remove passwords from .envrc
-
-Instead of putting passwords directly into `.envrc` and other files, use
-`gopass` and `summon` (both installed as part of our default packages).
-
-## Add higher-level scripting language support
-
-We prefer Deno for scripts (rather than `bash` or `fish`) because of portability
-and that Deno scripts are just Typescript. However, we can and should support
-other languages too:
-
-- [ ] [rust-script](https://rust-script.org/) can run Rust files and expressions
-      as scripts without any setup or compilation step
-- [ ] [erning/gorun](https://github.com/erning/gorun) enables "shebang" in the
-      source code of a Go program to run it
-- [ ] [bitfield/script](https://github.com/bitfield/script) makes it easy to
-      write shell-like scripts in Go - this can be helpful if we need to
-      customize things like PocketBase.io
-
-The only downside to using Rust, Go, etc. as scripting languages is that we need
-to have compilers available.
-
-## Create CLI completions for `psql` and other commands
-
-`strategy-coach/workspaces-host/lib/postgres/pgpass/pgpass.ts` has a TODO which
-suggests
-[martin1keogh/zsh_pgpass_completion](https://github.com/martin1keogh/zsh_pgpass_completion)-like
-CLI completions. Once that's done incorporate the generated completions into
-`home-polyglot`.
-
-## Use `.netrc` and -n with `curl` commands
-
-See
-[Do you use curl? Stop using -u. Please use curl -n and .netrc](https://community.apigee.com/articles/39911/do-you-use-curl-stop-using-u-please-use-curl-n-and.html).
-We should update all references to `curl` to include `curl -n` so that `.netrc`
-is optionally pulled in when we need to use the following configuration:
-
-```
-machine api.github.com
-  login gitHubUserName
-  password gh-personal-access-token
-```
-
-When we run into problems of API rate limiting with anonymous use of
-`api.github.com` then users can easily switch to authenticated use of
-`api.github.com` which will increase rate limits.
-
-## Install optional packages via chezmoi
-
-Use [run_once_install-packages.sh.tmpl](run_once_install-packages.sh.tmpl) in
-case we need to install some defaults. See:
-
-```bash
-chezmoi execute-template '{{ .chezmoi.osRelease.id }}'      # e.g. debian or ubuntu
-chezmoi execute-template '{{ .chezmoi.osRelease.idLike }}'  # e.g. debian if running ubuntu
-```
-
-If a release is Debian or Debian-like (e.g. Ubuntu and others) we should
-automatically install some packages through `chezmoi`
-[scripts to perform actions](https://www.chezmoi.io/docs/how-to/#use-scripts-to-perform-actions).
-This might be a better way to install `postgresql-client` and other
-database-specific functionality as well as other packages.
-
-## File Management
-
-- Integrate [Wildland](https://wildland.io/), a collection of protocols,
-  conventions, and software, which creates a union file system across S3,
-  WebDAV, K8s, and other storage providers.

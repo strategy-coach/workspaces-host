@@ -78,7 +78,15 @@ exit
 ```
 
 At this point the default configuration should be complete and you can start
-using your Coach Workspaces (CWS).
+using your Coach Workspaces (CWS). Start a new session and run this command to
+see if everything looks good:
+
+```bash
+coach-doctor.ts
+```
+
+`coach-doctor.ts` is a Deno script which checks that all our dependencies are
+available.
 
 ## Secrets Management
 
@@ -148,11 +156,11 @@ particular GitHub repo.
 
 We use `pkgx` to manage languages and utilities when deterministic
 reproducibility is not crucial and convenience is more important. For complex
-setups you can also try `mise`. `pkgx` and `mise` enable tools to be installed
-and, more importantly, support multiple versions simultaneously. For example, we
-heavily use `Deno` for multiple projects but each project might require a
-different version. `pkgx` and `mise` support global, per session, and per
-project (directory) version configuration strategy.
+setups you should also check out [mise](https://mise.jdx.dev/). `pkgx` and `mise`
+enable tools to be installed and, more importantly, support multiple versions
+simultaneously. For example, we heavily use `Deno` for multiple projects but each
+project might require a different version. `pkgx` and `mise` support global, per
+session, and per project (directory) version configuration strategy.
 
 In addition to `pkgx` and `mise` which both support a flexible version
 configuration strategy for languages and runtimes, we use
@@ -174,6 +182,8 @@ are possible.
 There are some
 [direnv YouTube videos](https://www.youtube.com/results?search_query=direnv)
 worth watching to get familar with the capabilities.
+
+If you're using `mise` you should use the built-in `direnv`-like capability in `mise`.
 
 ### Conventions
 

@@ -31,6 +31,7 @@ const latestGitHubTag = async (
 async function ensureTextFile(
   url: string,
   destFile: string,
+  executable: boolean,
 ): Promise<string | undefined> {
   const response = await fetch(url);
   if (!response.ok) {
@@ -38,6 +39,8 @@ async function ensureTextFile(
   }
   const content = await response.text();
   await Deno.writeTextFile(destFile, content);
+  // 0o711 user has rwx, group and world have rx
+  if (executable) Deno.chmod(destFile, 0o711);
   return undefined; // success
 }
 
@@ -77,9 +80,9 @@ const setup = new Command()
     // Netspective Labs SQLa `pgpass.ts` parses and allows PostgreSQL connection lookups
     results.push((await $`${HOME}/.local/bin/deno install -A -f --quiet --unstable https://raw.githubusercontent.com/netspective-labs/sql-aide/${await latestGitHubTag('netspective-labs/sql-aide')}/lib/postgres/pgpass/pgpass.ts`.stderr("piped")).stderr);
 
-    results.push(await ensureTextFile('https://raw.githubusercontent.com/pnikosis/semtag/master/semtag', localBinDest('git-semtag')))
-    results.push(await ensureTextFile('https://raw.githubusercontent.com/fboender/multi-git-status/master/mgitstatus', localBinDest('git-mgitstatus')))
-    results.push(await ensureTextFile('https://raw.githubusercontent.com/kamranahmedse/git-standup/master/git-standup', localBinDest('git-standup')))
+    results.push(await ensureTextFile('https://raw.githubusercontent.com/pnikosis/semtag/master/semtag', localBinDest('git-semtag'), true))
+    results.push(await ensureTextFile('https://raw.githubusercontent.com/fboender/multi-git-status/master/mgitstatus', localBinDest('git-mgitstatus'), true))
+    results.push(await ensureTextFile('https://raw.githubusercontent.com/kamranahmedse/git-standup/master/git-standup', localBinDest('git-standup'), true))
 
     // find all non-null strings from the output and put them into a single string
     reportResults('setup', results.filter(l => l).map(l => l?.trim()).filter(l => l ? (l.length > 0) : false).join("\n\n"), logFile);

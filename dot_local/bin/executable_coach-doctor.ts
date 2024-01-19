@@ -126,7 +126,16 @@ export const checkup = doctor(function* () {
   yield doctorCategory("Workspaces Host", function* () {
     yield {
       diagnose: async (report) => {
-        await report({ ensure: { cmd: "fish" } });
+        await report({
+          ensure: {
+            cmd: "fish",
+            cmdVersion: async (cmd) =>
+              (await $`${cmd} --version`.text()).replace(
+                /fish, version (.*)/,
+                (_, version) => `fish ${version}`,
+              ),
+          },
+        });
         await report({ ensure: { cmd: "git" } });
         await report({
           ensure: {
@@ -137,6 +146,7 @@ export const checkup = doctor(function* () {
         });
         await report({ ensure: { cmd: "pkgx" } });
         await report({ ensure: { cmd: "eget" } });
+        await report({ ensure: { cmd: "gopass" } });
         await report({ ensure: { cmd: "pgpass" } });
         await report({
           ensure: {

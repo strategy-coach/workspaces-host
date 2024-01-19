@@ -94,7 +94,12 @@ export function doctor(categories: () => Generator<DoctorCategory>) {
                 if (cmdVersion) {
                   report({ ok: await cmdVersion(cmd) });
                 } else {
-                  report({ ok: `${cmd} ${await $`${cmd} --version`.text()}` });
+                  report({
+                    ok: (await $`${cmd} --version`.text()).replace(
+                      /\s+version\s+/,
+                      " ",
+                    ),
+                  });
                 }
               } else {
                 report({ warn: `\`${cmd}\` command not found` });
@@ -111,14 +116,41 @@ export function doctor(categories: () => Generator<DoctorCategory>) {
   };
 }
 
+const firstWords = (text: string, count: number) =>
+  text.split(/[ ,]/).filter((_, i) => i < count).join(" ").replace(
+    /\s+version\s+/,
+    " ",
+  );
+
 export const checkup = doctor(function* () {
   yield doctorCategory("Workspaces Host", function* () {
     yield {
       diagnose: async (report) => {
         await report({ ensure: { cmd: "git" } });
-        await report({ ensure: { cmd: "chezmoi" } });
+        await report({
+          ensure: {
+            cmd: "chezmoi",
+            cmdVersion: async (cmd) =>
+              firstWords(await $`${cmd} --version`.text(), 3),
+          },
+        });
         await report({ ensure: { cmd: "pkgx" } });
         await report({ ensure: { cmd: "eget" } });
+        await report({ ensure: { cmd: "pgpass" } });
+        await report({
+          ensure: {
+            cmd: "git-semtag",
+            cmdVersion: async (cmd) =>
+              `${cmd} ${((await $`${cmd} --version`.text()).split(" ")[1])}`,
+          },
+        });
+        await report({
+          ensure: {
+            cmd: "git-mgitstatus",
+            cmdVersion: async (cmd) =>
+              `${cmd} ${(await $`${cmd} --version`.text())}`,
+          },
+        });
       },
     };
   });
@@ -140,7 +172,8 @@ export const checkup = doctor(function* () {
         await report({
           ensure: {
             cmd: "wget",
-            cmdVersion: async (cmd) => (await $`${cmd} --version`.lines())[0],
+            cmdVersion: async (cmd) =>
+              firstWords((await $`${cmd} --version`.lines())[0], 3),
           },
         });
       },

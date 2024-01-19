@@ -85,8 +85,8 @@ using your Coach Workspaces (CWS).
 
 - Generate [GitHub personal access tokens](https://github.com/settings/tokens)
   and update `$HOME/.config/chezmoi/chezmoi.toml` file (this file is created at
-  installation and is private to the user). Then, run `chez apply` to regenerate
-  all configuration files that use the global `chezmoi.toml` file.
+  installation and is private to the user). Then, run `chezmoi apply` to
+  regenerate all configuration files that use the global `chezmoi.toml` file.
 - `$HOME/.pgpass` should follow
   [PostgreSQL .pgpass](https://tableplus.com/blog/2019/09/how-to-use-pgpass-in-postgresql.html)
   rules for password management.
@@ -97,8 +97,8 @@ Regularly run, or when `github.com/strategy-coach/workspaces-host` repo is
 updated:
 
 ```bash
-chez upgrade
-chez update
+chezmoi upgrade
+chezmoi update
 ```
 
 <mark>** DO NOT EDIT ** chezmoi-managed files. To see which files are managed by
@@ -151,17 +151,16 @@ prometheus --config.file=prometheus.yml
 Prometheus should start up. You should also be able to browse to a status page
 about itself at localhost:9090
 
-### Contributing to `home-polyglot` project
+### Contributing to `workspaces-host` project
 
 To see which files are _managed_ by `chezmoi` run `chezmoi managed`. Never edit
-any managed without using `chez edit` or opening the files in the `chezmoi`
-source directory. Use `chez edit <managed-file> --apply` like
-`chez edit ~/.config/fish/config.fish --apply` when you want to make quick edits
-to individual files and apply the changes immediately.
+any managed without using `chezmoi edit` or opening the files in the `chezmoi`
+source directory. Use `chezmoi edit <managed-file> --apply` like
+`chezmoi edit ~/.config/fish/config.fish --apply` when you want to make quick
+edits to individual files and apply the changes immediately.
 
 An easier way to modify these file is to use VS Code to edit and manage
-`chezmoi` templates and configurations using the `chez-code` alias, which is
-basically the same as running `chezmoi cd` and then opening VS Code.
+`chezmoi` templates and configurations using the `chezmoi cd && code .`.
 
 Be sure to follow the
 [chezmoi workflows for editing configuration files](https://www.chezmoi.io/user-guide/command-overview/#daily-commands)
@@ -299,7 +298,7 @@ is installed as `git-semtag` in `$HOME/.local/bin`.
 For example:
 
 ```bash
-chez cd
+chezmoi cd
 # perform regular git commits
 git chglog --output CHANGELOG.md && git commit -m "auto-generate CHANGELOG.md" CHANGELOG.md
 git semtag final
@@ -405,4 +404,3 @@ database-specific functionality as well as other packages.
 - Integrate [Wildland](https://wildland.io/), a collection of protocols,
   conventions, and software, which creates a union file system across S3,
   WebDAV, K8s, and other storage providers.
-

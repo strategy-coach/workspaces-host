@@ -37,6 +37,6 @@ export GITHUB_API_TOKEN="{{ .github.user.prime.pat }}"
 # mise-en-place dev tools, env vars, task runner
 curl -fsSL https://mise.jdx.dev/install.sh | MISE_QUIET=true sh
 
-# executable_coach-wsh.ts hash: {{ include "dot_local/share/coach-wsh/executable_coach-wsh.ts" | sha256sum }}
+# executable_workspaces-host-ctl.ts hash: {{ include "dot_strategy-coach/executable_workspaces-host-ctl.ts" | sha256sum }}
 # run anything else that can be run through Deno setup
-~/.local/bin/deno run -A --unstable ~/.local/share/coach-wsh/coach-wsh-ctl.ts setup
+~/.local/bin/deno run -A --unstable ~/.strategy-coach/workspaces-host-ctl.ts setup

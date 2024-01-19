@@ -55,7 +55,8 @@ echo "$HOME/.local/bin/fish" | sudo tee -a /etc/shells
 ```
 
 Install `chezmoi` and generate configuration files based on values in Strategy
-Coach Workspaces Host `chezmoi` templates:
+Coach Workspaces Host `chezmoi` templates (`/lb` in the URL means put `chezmoi`
+in ~/.local/bin):
 
 ```bash
 sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply strategy-coach/workspaces-host
@@ -72,7 +73,7 @@ Let's finish up by configuring 'Fish' as our default shell, prompt decorations,
 and endpoint observability (osquery, et. al.):
 
 ```bash
-~/.local/share/coach-wsh/setup-endpoint
+~/.strategy-coach/finalize-setup
 chsh -s ~/.local/bin/fish
 exit
 ```

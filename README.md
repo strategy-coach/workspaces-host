@@ -4,8 +4,8 @@ This is our opinionated [chezmoi](https://www.chezmoi.io/)-based "workspaces
 host" (or "engineering sandbox home") setup for polyglot software development or
 any other "creator tasks" that are performed on Linux-like operating systems.
 
-See [chezmoi.toml Example](dot_config/chezmoi/chezmoi.toml.example) to help
-understand the variables that can be set and used across chezmoi templates.
+See [chezmoi.toml Example](.chezmoi.toml.tmpl) to help understand the variables
+that can be set and used across chezmoi templates.
 
 If you're using Windows 10/11 with WSL2, create a "disposable" Linux instance
 using Powershell CLI or Windows Store. This project treats the WSL2 instance as

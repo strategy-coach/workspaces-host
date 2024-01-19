@@ -18,8 +18,9 @@ shell or `chezmoi`.
 
 ## Linux versions
 
-Any Debian-based distro which supports Fish Shell 3.6+ should work, including
-Ubuntu 20.04 LTS, Ubuntu 22.04 LTS, Debian 11+ with Fish upgrades, etc.
+Any Linux distro or similar OS which supports Fish Shell 3.6+ should work, including
+Debian, Ubuntu, Kali, Fedora, etc. It will probably work with any Linux-like OS but
+has only been tested on Debian-based distros (e.g. Debian 11, Kali Linux and Ubuntu LTS).
 
 If you're using Windows WSL, you can use these commands to install/uninstall our
 preferred distro:
@@ -29,9 +30,7 @@ $ wsl --unregister Debian
 $ wsl --install -d Debian
 ```
 
-If you're using a Debian-based distro you should be able to run this repo in any
-Debian user account. It will probably work with any Linux-like OS but has only
-been tested on Debian-based distros (e.g. Kali Linux and Ubuntu 20.04 LTS).
+You should be able to run this repo in any user account.
 
 ## One-time setup
 

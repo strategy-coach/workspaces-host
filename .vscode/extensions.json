@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "denoland.vscode-deno",
+        "yzhang.markdown-all-in-one",
+        "shd101wyy.markdown-preview-enhanced",
+        "gruntfuggly.todo-tree"
+    ]
+}

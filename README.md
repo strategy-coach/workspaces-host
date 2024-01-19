@@ -153,16 +153,20 @@ from GitHub when `pkgx` does not have a package in its pantry. `eget` works
 great when all we care about is the latest version of a single binary from a
 particular GitHub repo.
 
-## Polyglot Languages Installation and Version Management
+## Polyglot Languages Installation and Directory-specific Version Management
 
 We use `pkgx` to manage languages and utilities when deterministic
-reproducibility is not crucial and convenience is more important. For complex
-setups you should also check out [mise](https://mise.jdx.dev/). `pkgx` and
-`mise` enable tools to be installed and, more importantly, support multiple
-versions simultaneously. For example, we heavily use `Deno` for multiple
-projects but each project might require a different version. `pkgx` and `mise`
-support global, per session, and per project (directory) version configuration
-strategy.
+reproducibility is not crucial and convenience is more important.
+
+For complex setups you should also check out [mise](https://mise.jdx.dev/).
+
+`pkgx` and `mise` enable tools to be installed and, more importantly, support
+multiple versions simultaneously. For example, we heavily use `Deno` for
+multiple projects but each project might require a different version. `pkgx` and
+`mise` support global, per session, and per project (directory) version
+configuration strategy.
+
+### Important per-project and per-directory configuration management tools
 
 In addition to `pkgx` and `mise` which both support a flexible version
 configuration strategy for languages and runtimes, we use
@@ -188,14 +192,14 @@ worth watching to get familar with the capabilities.
 If you're using `mise` you should use the built-in `direnv`-like capability in
 `mise`.
 
-### Conventions
+## Conventions
 
 - We use `$HOME/.local/bin` for binaries whenever possible instead globally
   installing them using `sudo`.
 - We use `direnv` and per-directory `.envrc` to help manage secrets and
   env-based configurations per-project rather than globally.
 
-### Packages
+## Packages
 
 Run `coach-doctor.ts` to get list of useful packages and versions included. Some
 highlights:
@@ -215,13 +219,13 @@ highlights:
 - We use `osQuery`, `cnquery`, `steampipe`, et. al. system and endpoint
   observabilty tools for SOC2 and other compliance requirements
 
-### Environment Variables
+## Environment Variables
 
 - `XDG_CACHE_HOME` (defined in `dot_config/fish/config.fish`)
 - `IS_COACH_WSH` and `IS_COACH_WSH_WSL` (defined in
   `dot_config/fish/conf.d/coach-workspaces-home.fish`)
 
-### PATH
+## PATH
 
 - `$HOME/.local/bin` (defined in `dot_config/fish/config.fish`)
 
@@ -230,6 +234,8 @@ highlights:
 Please review [Coach Workspaces](https://github.com/strategy-coach/workspaces)
 for our opinionated approach to cloning and working with "managed" Git repos
 (from GitHub, GitLab, BitBucket, etc.).
+
+## Semantic Versioning
 
 We use [Semantic Versioning](https://semver.org/) so be sure to learn and
 regularly use the [semtag](https://github.com/nico2sh/semtag) bash script that
@@ -245,24 +251,3 @@ git semtag final
 # or 'git semtag final -v "v0.5.0"' for specific version
 git push
 ```
-
-## Important per-project and per-directory configuration management tools
-
-We use `direnv` to encourage usage of environment variables with per-directory
-flexibility. Per their documentation:
-
-> direnv is an extension for your shell. It augments existing shells with a new
-> feature that can load and unload environment variables depending on the
-> current directory.
-
-We use `direnv` and `.envrc` files to manage environments on a
-[per-directory](https://www.tecmint.com/direnv-manage-environment-variables-in-linux/)
-(per-project and descendant directories) basis. `direnv` can be used to
-[manage secrets](https://www.youtube.com/watch?v=x3p-28PajJY) as well as
-non-secret configurations. Many other
-[development automation techniques](http://www.futurile.net/2016/02/03/automating-environment-setup-with-direnv/)
-are possible.
-
-There are some
-[direnv YouTube videos](https://www.youtube.com/results?search_query=direnv)
-worth watching to get familar with the capabilities.

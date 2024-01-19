@@ -62,8 +62,8 @@ sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply strategy-coach/workspace
 After `chezmoi` is initialized, edit the config file with your configuration:
 
 ```bash
-vim.tiny ~/.config/chezmoi/chezmoi.toml
-~/.local/bin/chezmoi apply
+$ vim.tiny ~/.config/chezmoi/chezmoi.toml
+$ ~/.local/bin/chezmoi apply
 ```
 
 We prefer `Fish` as the default shell and `Oh My Posh` as the CLI prompts theme
@@ -82,7 +82,7 @@ using your Coach Workspaces (CWS). Start a new session and run this command to
 see if everything looks good:
 
 ```bash
-coach-doctor.ts
+$ coach-doctor.ts
 ```
 
 `coach-doctor.ts` is a Deno script which checks that all our dependencies are
@@ -106,13 +106,13 @@ Regularly run, or when `github.com/strategy-coach/workspaces-host` repo is
 updated:
 
 ```bash
-chezmoi upgrade
-chezmoi update
+$ chezmoi upgrade                   # run once in a while
+$ chezmoi update && chezmoi apply   # run daily at least
 ```
 
-<mark>** DO NOT EDIT ** chezmoi-managed files. To see which files are managed by
-chezmoi run _chezmoi managed_ and edit those using guidance in the
-_Contributing_ section below.</mark>
+<mark>** DO NOT EDIT ** chezmoi-managed files</mark>. To see which files are managed 
+by chezmoi run _chezmoi managed_ and edit those using guidance in the _Contributing_
+section below.
 
 ### Running chezmoi-managed scripts manually
 

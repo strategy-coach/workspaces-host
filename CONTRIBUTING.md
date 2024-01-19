@@ -7,7 +7,7 @@ source directory. Use `chezmoi edit <managed-file> --apply` like
 edits to individual files and apply the changes immediately.
 
 An easier way to modify these file is to use VS Code to edit and manage
-`chezmoi` templates and configurations using the `chezmoi cd && code .`.
+`chezmoi` templates and configurations using the `code $(chezmoi source-path)`.
 
 Be sure to follow the
 [chezmoi workflows for editing configuration files](https://www.chezmoi.io/user-guide/command-overview/#daily-commands)

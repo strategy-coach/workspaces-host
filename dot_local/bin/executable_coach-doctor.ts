@@ -126,6 +126,7 @@ export const checkup = doctor(function* () {
   yield doctorCategory("Workspaces Host", function* () {
     yield {
       diagnose: async (report) => {
+        await report({ ensure: { cmd: "fish" } });
         await report({ ensure: { cmd: "git" } });
         await report({
           ensure: {

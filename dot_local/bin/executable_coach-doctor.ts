@@ -136,6 +136,14 @@ export const checkup = doctor(function* () {
               ),
           },
         });
+        await report({
+          ensure: {
+            cmd: "oh-my-posh",
+            cmdVersion: async (cmd) =>
+              `${cmd} ${await $`${cmd} --version`.text()}`,
+          },
+        });
+        await report({ ensure: { cmd: "osqueryi" } });
         await report({ ensure: { cmd: "git" } });
         await report({
           ensure: {

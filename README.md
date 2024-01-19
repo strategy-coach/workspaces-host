@@ -51,6 +51,7 @@ curl -fsSL https://raw.githubusercontent.com/sigoden/upt/main/install.sh | sudo 
 sudo upt install -y unzip git git-extras libatomic1 jq
 curl -Ssf https://pkgx.sh | sh
 pkgx install fishshell.com deno.land eget direnv.net crates.io/zoxide crates.io/exa github.com/gopasspw/gopass
+echo "$HOME/.local/bin/fish" | sudo tee -a /etc/shells
 ```
 
 Install `chezmoi` and generate configuration files based on values in Strategy
@@ -67,13 +68,11 @@ $ vim.tiny ~/.config/chezmoi/chezmoi.toml
 $ ~/.local/bin/chezmoi apply
 ```
 
-We prefer `Fish` as the default shell and `Oh My Posh` as the CLI prompts theme
-manager. These are configured automatically by `chezmoi`'s first-time
-configuration. You should switch your user's default shell to `Fish` by running:
+Let's finish up by configuring 'Fish' as our default shell, prompt decorations,
+and endpoint observability (osquery, et. al.):
 
 ```bash
-curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
-echo "$HOME/.local/bin/fish" | sudo tee -a /etc/shells
+~/.local/share/coach-wsh/setup-endpoint
 chsh -s ~/.local/bin/fish
 exit
 ```
@@ -121,20 +120,20 @@ There are a few chezmoi-managed scripts that are automatically run when
 necessary:
 
 - `run_once_install-packages.sh.tmpl`
+- `run_onchange_dot_eget.toml.sh.tmpl`
 
 These and other "managed" scripts show up like this:
 
 ```bash
 $ chezmoi managed | grep '\.sh$'
+.eget.toml.sh
 install-packages.sh
 ```
 
 #### Force the chezmoi-managed script execution to Install / Update
 
-- If you ever need to run them manually (such as when chezmoi or NL Aide libs
-  are changed or an error occurs and you need to force the execution), as well
-  as forcefully install the utilitize mentioned in this script to latest
-  version. you would use:
+If you ever need to run chezmoi-managed scripts "manually" or forcefully install
+the tools mentioned in this script to latest version. you would use:
 
 ```bash
 $ chezmoi state delete-bucket --bucket=scriptState
@@ -166,7 +165,7 @@ multiple projects but each project might require a different version. `pkgx` and
 `mise` support global, per session, and per project (directory) version
 configuration strategy.
 
-### Important per-project and per-directory configuration management tools
+### Per-project and per-directory configuration management tools
 
 In addition to `pkgx` and `mise` which both support a flexible version
 configuration strategy for languages and runtimes, we use
@@ -207,7 +206,9 @@ highlights:
 - We use [fish shell](https://fishshell.com/) for our CLI.
 - We use `git` and `git-extras` and define many `git-*` individual scripts (e.g.
   `mGit`) because we're a GitOps shop.
-- We use [pkgx](https://pkgx.sh) for basic tools isolation.
+- We use [pkgx](https://pkgx.sh) and its _Shell Integration_ plus `dev` modes
+  for typical tools isolation.
+- We use [mise](https://mise.jdx.dev/) for complex tools.
 - We use [deno](https://deno.land) for custom scripting and `dax` command runner
   to execute tasks. We favor `deno` over `make` for new packages but `make` is
   still a great tool for legacy requirements. If we create complex scripts that
@@ -217,7 +218,9 @@ highlights:
 - We use [gopass](https://www.gopass.pw/) for managing secrets that should not
   be in plaintext.
 - We use `osQuery`, `cnquery`, `steampipe`, et. al. system and endpoint
-  observabilty tools for SOC2 and other compliance requirements
+  observabilty tools for SOC2 and other compliance requirements.
+- We use `OpenObserve` for metrics, tracing, logging and similar application
+  lifecycle obsverability.
 
 ## Environment Variables
 

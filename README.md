@@ -136,21 +136,6 @@ See
 in `chezmoi` documentation for more information about how to force execution of
 scripts instead of using memoized state.
 
-### Starting Prometheus
-
-To start Prometheus, prepare the
-[prometheus.yml](https://prometheus.io/docs/prometheus/latest/getting_started/#configuring-prometheus-to-monitor-itself)
-configuration file at any directory of your choice. Change to the directory
-containing the Prometheus configuration file and run:
-
-```bash
-# By default, Prometheus stores its database in ./data (flag --storage.tsdb.path).
-prometheus --config.file=prometheus.yml
-```
-
-Prometheus should start up. You should also be able to browse to a status page
-about itself at localhost:9090
-
 ### Contributing to `workspaces-host` project
 
 To see which files are _managed_ by `chezmoi` run `chezmoi managed`. Never edit

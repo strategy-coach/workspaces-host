@@ -144,7 +144,21 @@ export const checkup = doctor(function* () {
               firstWords(await $`${cmd} --version`.text(), 3),
           },
         });
+        await report({
+          ensure: {
+            cmd: "direnv",
+            cmdVersion: async (cmd) =>
+              `${cmd} ${await $`${cmd} --version`.text()}`,
+          },
+        });
         await report({ ensure: { cmd: "pkgx" } });
+        await report({
+          ensure: {
+            cmd: "mise",
+            cmdVersion: async (cmd) =>
+              `${cmd} ${await $`${cmd} --version`.text()}`,
+          },
+        });
         await report({ ensure: { cmd: "eget" } });
         await report({
           ensure: {

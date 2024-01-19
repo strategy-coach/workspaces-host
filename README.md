@@ -18,9 +18,10 @@ shell or `chezmoi`.
 
 ## Linux versions
 
-Any Linux distro or similar OS which supports Fish Shell 3.6+ should work, including
-Debian, Ubuntu, Kali, Fedora, etc. It will probably work with any Linux-like OS but
-has only been tested on Debian-based distros (e.g. Debian 11, Kali Linux and Ubuntu LTS).
+Any Linux distro or similar OS which supports Fish Shell 3.6+ should work,
+including Debian, Ubuntu, Kali, Fedora, etc. It will probably work with any
+Linux-like OS but has only been tested on Debian-based distros (e.g. Debian 11,
+Kali Linux and Ubuntu LTS).
 
 If you're using Windows WSL, you can use these commands to install/uninstall our
 preferred distro:
@@ -110,9 +111,9 @@ $ chezmoi upgrade                   # run once in a while
 $ chezmoi update && chezmoi apply   # run daily at least
 ```
 
-<mark>** DO NOT EDIT ** chezmoi-managed files</mark>. To see which files are managed 
-by chezmoi run _chezmoi managed_ and edit those using guidance in the _Contributing_
-section below.
+<mark>** DO NOT EDIT ** chezmoi-managed files</mark>. To see which files are
+managed by chezmoi run _chezmoi managed_ and edit those using guidance in the
+_Contributing_ section below.
 
 ### Running chezmoi-managed scripts manually
 
@@ -156,11 +157,12 @@ particular GitHub repo.
 
 We use `pkgx` to manage languages and utilities when deterministic
 reproducibility is not crucial and convenience is more important. For complex
-setups you should also check out [mise](https://mise.jdx.dev/). `pkgx` and `mise`
-enable tools to be installed and, more importantly, support multiple versions
-simultaneously. For example, we heavily use `Deno` for multiple projects but each
-project might require a different version. `pkgx` and `mise` support global, per
-session, and per project (directory) version configuration strategy.
+setups you should also check out [mise](https://mise.jdx.dev/). `pkgx` and
+`mise` enable tools to be installed and, more importantly, support multiple
+versions simultaneously. For example, we heavily use `Deno` for multiple
+projects but each project might require a different version. `pkgx` and `mise`
+support global, per session, and per project (directory) version configuration
+strategy.
 
 In addition to `pkgx` and `mise` which both support a flexible version
 configuration strategy for languages and runtimes, we use
@@ -183,7 +185,8 @@ There are some
 [direnv YouTube videos](https://www.youtube.com/results?search_query=direnv)
 worth watching to get familar with the capabilities.
 
-If you're using `mise` you should use the built-in `direnv`-like capability in `mise`.
+If you're using `mise` you should use the built-in `direnv`-like capability in
+`mise`.
 
 ### Conventions
 
@@ -215,7 +218,7 @@ highlights:
 ### Environment Variables
 
 - `XDG_CACHE_HOME` (defined in `dot_config/fish/config.fish`)
-- `IS_CWS` and `IS_CWS_WSL` (defined in
+- `IS_COACH_WSH` and `IS_COACH_WSH_WSL` (defined in
   `dot_config/fish/conf.d/coach-workspaces-home.fish`)
 
 ### PATH

@@ -1,9 +1,9 @@
 # This file is managed by chezmoi in {{ .chezmoi.sourceFile }}. DO NOT EDIT directly.
 # To modify, use `chezmoi edit ~/.config/fish/conf.d/coach-workspaces-home.fish --apply`. 
 
-# CWS should used for all Coach Workspaces (CWS) env-vars
-export IS_CWS=1
-export IS_CWS_WSL=0
+# COACH_WSH should used for all Strategy Coach Workspaces Host env-vars
+export IS_COACH_WSH=1
+export IS_COACH_WSH_WSL=0
 
 {{- if (index . "git") }}
 {{-     if (index . "git" "credential") }}
@@ -25,9 +25,9 @@ export CWS_{{$key}}_HTTP_AUTHZ="{{$elem.username}}:{{$elem.password}}"
 set osVersion (cat /proc/version | string split0)
 if string match -rq "(Microsoft|WSL)" $osVersion
     if string match -rq WSL2 $osVersion
-        export IS_CWS_WSL=2
+        export IS_COACH_WSH_WSL=2
     else
-        export IS_CWS_WSL=1
+        export IS_COACH_WSH_WSL=1
     end
 end
 

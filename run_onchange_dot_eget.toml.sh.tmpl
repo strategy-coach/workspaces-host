@@ -1,0 +1,21 @@
+#!/bin/bash
+set -uo pipefail
+
+# For any chezmoi-managed config files this script depend on, we grab the SHA256 for the dependency.
+# See https://www.chezmoi.io/user-guide/use-scripts-to-perform-actions/#install-packages-with-scripts;
+
+{{- if (index . "github") }}
+{{-   if (index . "github" "user") }}
+{{-     if (index . "github" "user" "prime" "pat") }}
+# set this so that `eget` and other commands that need to access the GitHub API can use it (helps
+# prevent GitHub rate-limiting based issues)
+export GITHUB_API_TOKEN="{{ .github.user.prime.pat }}"
+{{-     else}}
+# '.github.user.prime.pat' required in chezmoi.toml if this is desired:
+#export GITHUB_API_TOKEN="..."
+{{-     end}}
+{{-   end}}
+{{- end}}
+
+# dot_eget.toml.tmpl hash: {{ include "dot_eget.toml.tmpl" | sha256sum }}
+~/.local/bin/deno run -A --unstable ~/.config/share/coach-wsh/coach-wsh.ts eget

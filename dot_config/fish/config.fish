@@ -12,3 +12,4 @@ oh-my-posh init fish --config ~/.config/oh-my-posh/coach.omp.json | source
 
 direnv hook fish | source
 zoxide init fish | source
+mise activate fish | source

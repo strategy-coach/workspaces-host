@@ -83,7 +83,7 @@ using your Coach Workspaces (CWS). Start a new session and run this command to
 see if everything looks good:
 
 ```bash
-$ coach-doctor.ts
+coach-doctor
 ```
 
 `coach-doctor.ts` is a Deno script which checks that all our dependencies are

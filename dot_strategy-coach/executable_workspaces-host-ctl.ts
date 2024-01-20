@@ -67,7 +67,7 @@ const setup = new Command()
 
     for(const pkg of pkgxInstallPkgs) {
       const result = (await $`/usr/local/bin/pkgx install ${pkg}`.stderr("piped")).stderr;
-      if(result.indexOf('pkgx: already installed') == -1) results.push(result);
+      if(result.indexOf('error') != -1) results.push(result);
     }
     
     // use `~/.eget.toml` configuration to install GitHub packages with `eget`

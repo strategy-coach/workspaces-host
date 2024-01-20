@@ -14,5 +14,5 @@ export CHEZMOI_GITHUB_ACCESS_TOKEN="{{ .github.user.prime.pat }}"
 
 ~/.local/bin/chezmoi completion fish | source
 
-alias code-chezmoi "code $(chezmoi source-path)"
-alias chez chezmoi
+alias code-chezmoi "code $(~/.local/bin/chezmoi source-path)"
+alias chez ~/.local/bin/chezmoi

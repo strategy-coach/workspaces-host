@@ -48,7 +48,7 @@ const reportResults = async (cmd: string, result: string, logFile: string) => {
     console.log(colors.red(`🚫 ${cmd} encountered errors or warnings (${colors.brightRed(`see ${logFile}`)}).`));
   } else {
     // deno-fmt-ignore
-    console.log(colors.dim(`✅ ${colors.green(`${cmd} completed`)} (no errors or warnings encountered).`));
+    console.log(`✅ ${colors.green(`${cmd} completed`)} ${colors.dim(`(no errors or warnings encountered)`)}.`);
   }
 };
 
@@ -60,9 +60,15 @@ const setup = new Command()
     default: logFileDest('setup.log'),
   })
   .action(async ({ pkgxInstall, logFile }) => {
+    const pkgxInstallPkgs = pkgxInstall?.split(/\s+/).filter(p => p.trim().length> 0) ?? [];
     const results: (string | undefined)[] = [];
 
-    console.log(colors.dim(`Setting up Strategy Coach Workspaces Host packages... (tail -f ${logFile})...${pkgxInstall}`));
+    console.log(colors.dim(`Setting up Strategy Coach Workspaces Host packages... (tail -f ${logFile})...`));
+
+    for(const pkg of pkgxInstallPkgs) {
+      const result = (await $`/usr/local/bin/pkgx install ${pkg}`.stderr("piped")).stderr;
+      if(result.indexOf('pkgx: already installed') == -1) results.push(result);
+    }
     
     // use `~/.eget.toml` configuration to install GitHub packages with `eget`
     results.push((await $`${HOME}/.local/bin/eget --download-all --quiet`.stderr("piped")).stderr);

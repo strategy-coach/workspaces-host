@@ -67,7 +67,7 @@ const setup = new Command()
     console.log(colors.dim(`Setting up Strategy Coach Workspaces Host packages... (tail -f ${logFile})...`));
 
     // use `~/.eget.toml` configuration to install GitHub packages with `eget`
-    results.push((await $`${HOME}/.local/bin/eget --download-all`.stderr("piped")).stderr);
+    results.push((await $`${HOME}/.local/bin/eget --download-all --quiet`.stderr("piped")).stderr);
 
     // Netspective Labs SQLa `pgpass.ts` parses and allows PostgreSQL connection lookups
     results.push((await $`${HOME}/.local/bin/deno install -A -f --quiet --unstable https://raw.githubusercontent.com/netspective-labs/sql-aide/${await latestGitHubTag('netspective-labs/sql-aide')}/lib/postgres/pgpass/pgpass.ts`.stderr("piped")).stderr);
@@ -81,7 +81,7 @@ const setup = new Command()
   });
 
 await new Command()
-  .name("coach-wsh")
+  .name("workspaces-host-ctl")
   .description("Strategy Coach Workspaces Host")
   .version("v1.0.0")
   .action(() => console.log(`No subcommand supplied.`))

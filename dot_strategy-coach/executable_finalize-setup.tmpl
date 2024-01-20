@@ -4,13 +4,13 @@ set -uo pipefail
 # This script is assumed to be run by an admin so `sudo` is OK.
 # This should be idempotent but is assumed to be only run once at bootstrap.
 
-# TODO: make this "smart" and work across OS's not just Debian
-
 # setup Oh-My-POSH prompt decorator
 curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
 
-# see https://osquery.io/downloads
-sudo mkdir -p /etc/apt/keyrings
-curl -L https://pkg.osquery.io/deb/pubkey.gpg | sudo tee /etc/apt/keyrings/osquery.asc
-sudo add-apt-repository 'deb [arch=amd64 signed-by=/etc/apt/keyrings/osquery.asc] https://pkg.osquery.io/deb deb main'
-sudo apt install osquery
+# install latest osQuery using Debian package
+# TODO: make this "smart" and work across OS's not just Debian
+OSQ_VERSION=`curl -fsSL https://api.github.com/repos/osquery/osquery/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")'`
+OSQ_APT_CACHE=/var/cache/apt/archives
+OSQ_DEB_FILE=osquery_${OSQ_VERSION}-1.linux_amd64.deb
+sudo curl -fsSL -o $OSQ_APT_CACHE/$OSQ_DEB_FILE https://pkg.osquery.io/deb/$OSQ_DEB_FILE
+sudo dpkg -i $OSQ_APT_CACHE/$OSQ_DEB_FILE

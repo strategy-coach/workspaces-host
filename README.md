@@ -68,8 +68,9 @@ After `chezmoi` is initialized, edit the config file with your configuration:
 vim.tiny ~/.config/chezmoi/chezmoi.toml
 ```
 
-Let's finish up by applying the `chezmoi` templates, configuring 'Fish' as our default
-shell, setting up prompt decorations, and endpoint observability (osquery, et. al.):
+Let's finish up by applying the `chezmoi` templates, configuring 'Fish' as our
+default shell, setting up prompt decorations, and endpoint observability
+(osquery, et. al.):
 
 ```bash
 ~/.local/bin/chezmoi apply
@@ -86,7 +87,7 @@ see if everything looks good:
 coach-doctor
 ```
 
-`coach-doctor.ts` is a Deno script which checks that all our dependencies are
+`coach-doctor` is a Deno script which checks that all our dependencies are
 available.
 
 ## Secrets Management
@@ -201,7 +202,7 @@ If you're using `mise` you should use the built-in `direnv`-like capability in
 
 ## Packages
 
-Run `coach-doctor.ts` to get list of useful packages and versions included. Some
+Run `coach-doctor` to get list of useful packages and versions included. Some
 highlights:
 
 - We use [fish shell](https://fishshell.com/) for our CLI.

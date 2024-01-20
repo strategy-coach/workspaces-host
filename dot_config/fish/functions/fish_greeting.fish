@@ -6,7 +6,7 @@ function fish_greeting
     if test -z "$fgKeyValue"
         chezmoi state set --bucket=fishGreeting --key="shown_$today" --value "$(date)"
         printf "Welcome to %sStrategy Coach Workspaces%s (%sCWS%s) %sHost CLI%s %s$today%s\n" (set_color yellow) (set_color normal) (set_color --bold yellow) (set_color normal) (set_color --italics) (set_color normal) (set_color --dim) (set_color normal)
-        printf "%sTODO: add coach-doctor.ts and other reminders, fixup chezmoi status message below, etc.\n%s" (set_color --dim) (set_color normal)
+        printf "%sTODO: add coach-doctor and other reminders, fixup chezmoi status message below, etc.\n%s" (set_color --dim) (set_color normal)
 
         # https://www.chezmoi.io/user-guide/daily-operations/#pull-the-latest-changes-from-your-repo-and-see-what-would-change-without-actually-applying-the-changes
         set_color --dim

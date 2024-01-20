@@ -56,26 +56,18 @@ const reportResults = async (cmd: string, result: string, logFile: string) => {
 };
 
 // deno-fmt-ignore
-const eget = new Command()
-  .description("Use `~/.eget.toml` configuration to install GitHub packages with `eget`")
-  .option("--log-file <log-file>", "The location of the log file", {
-    default: logFileDest('eget.log'),
-  })
-  .action(async ({ logFile }) => {
-    console.log(colors.dim(`Installing GitHub-fetchable packages with \`eget\` (tail -f ${logFile})...`));
-    reportResults('eget', (await $`${HOME}/.local/bin/eget --download-all`.captureCombined()).combined, logFile);
-  });
-
-// deno-fmt-ignore
 const setup = new Command()
   .description("Idempotent setup of all Strategy Coach Workspaces Host packages")
   .option("--log-file <log-file>", "The location of the log file", {
     default: logFileDest('setup.log'),
   })
   .action(async ({ logFile }) => {
-    const results: (string|undefined)[] = [];
+    const results: (string | undefined)[] = [];
 
     console.log(colors.dim(`Setting up Strategy Coach Workspaces Host packages... (tail -f ${logFile})...`));
+
+    // use `~/.eget.toml` configuration to install GitHub packages with `eget`
+    results.push((await $`${HOME}/.local/bin/eget --download-all`.stderr("piped")).stderr);
 
     // Netspective Labs SQLa `pgpass.ts` parses and allows PostgreSQL connection lookups
     results.push((await $`${HOME}/.local/bin/deno install -A -f --quiet --unstable https://raw.githubusercontent.com/netspective-labs/sql-aide/${await latestGitHubTag('netspective-labs/sql-aide')}/lib/postgres/pgpass/pgpass.ts`.stderr("piped")).stderr);
@@ -93,6 +85,5 @@ await new Command()
   .description("Strategy Coach Workspaces Host")
   .version("v1.0.0")
   .action(() => console.log(`No subcommand supplied.`))
-  .command("eget", eget)
   .command("setup", setup)
   .parse();

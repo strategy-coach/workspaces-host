@@ -120,7 +120,7 @@ _Contributing_ section below.
 There are a few chezmoi-managed scripts that are automatically run when
 necessary:
 
-- `run_once_install-packages.sh.tmpl`
+- `run_onchange_install-packages.sh.tmpl`
 - `run_onchange_dot_eget.toml.sh.tmpl`
 
 These and other "managed" scripts show up like this:

@@ -38,5 +38,6 @@ export GITHUB_API_TOKEN="{{ .github.user.prime.pat }}"
 curl -fsSL https://mise.jdx.dev/install.sh | MISE_QUIET=true sh
 
 # executable_workspaces-host-ctl.ts hash: {{ include "dot_strategy-coach/executable_workspaces-host-ctl.ts" | sha256sum }}
+# dot_eget.toml.tmpl hash: {{ include "dot_eget.toml.tmpl" | sha256sum }}
 # run anything else that can be run through Deno setup
 ~/.local/bin/deno run -A --unstable ~/.strategy-coach/workspaces-host-ctl.ts setup

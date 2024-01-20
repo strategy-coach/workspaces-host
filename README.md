@@ -59,20 +59,20 @@ Coach Workspaces Host `chezmoi` templates (`/lb` in the URL means put `chezmoi`
 in ~/.local/bin):
 
 ```bash
-sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply strategy-coach/workspaces-host
+sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init strategy-coach/workspaces-host
 ```
 
 After `chezmoi` is initialized, edit the config file with your configuration:
 
 ```bash
 $ vim.tiny ~/.config/chezmoi/chezmoi.toml
-$ ~/.local/bin/chezmoi apply
 ```
 
-Let's finish up by configuring 'Fish' as our default shell, prompt decorations,
-and endpoint observability (osquery, et. al.):
+Let's finish up by applying the `chezmoi` templates, configuring 'Fish' as our default
+shell, setting up prompt decorations, and endpoint observability (osquery, et. al.):
 
 ```bash
+$ ~/.local/bin/chezmoi apply
 ~/.strategy-coach/finalize-setup
 chsh -s ~/.local/bin/fish
 exit

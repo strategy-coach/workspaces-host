@@ -38,31 +38,23 @@ You should be able to run this repo in any user account.
 Install `curl` and `wget` using OS package manager before continuing. This
 should be the only distro-specific installation required.
 
-```bash
-sudo apt-get -qq update && sudo apt-get install -qq -y curl wget
-```
-
 Once you've got `wget` and `curl`, continue installing `upt` (a univeral CLI
 which installs native packages) and `pkgx` for more complex package management
 tasks (like for engineering environments):
 
 ```bash
+sudo apt-get -qq update && sudo apt-get install -qq -y curl wget
 curl -fsSL https://raw.githubusercontent.com/sigoden/upt/main/install.sh | sudo sh -s -- --to /usr/local/bin
 sudo upt install -y unzip git git-extras libatomic1 jq
 curl -Ssf https://pkgx.sh | sh
 pkgx install fishshell.com deno.land eget direnv.net crates.io/zoxide crates.io/exa github.com/gopasspw/gopass
 echo "$HOME/.local/bin/fish" | sudo tee -a /etc/shells
-```
-
-Install `chezmoi` and generate configuration files based on values in Strategy
-Coach Workspaces Host `chezmoi` templates (`/lb` in the URL means put `chezmoi`
-in ~/.local/bin):
-
-```bash
 sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init strategy-coach/workspaces-host
 ```
 
-After `chezmoi` is initialized, edit the config file with your configuration:
+At this point the basic infrastructure and required packages as well as Coach
+Workspaces Host `chezmoi` templates are installed. Now edit the config file with
+your configuration:
 
 ```bash
 vim.tiny ~/.config/chezmoi/chezmoi.toml
@@ -121,21 +113,19 @@ _Contributing_ section below.
 There are a few chezmoi-managed scripts that are automatically run when
 necessary:
 
-- `run_onchange_install-packages.sh.tmpl`
-- `run_onchange_dot_eget.toml.sh.tmpl`
+- `run_after_once_dot_strategy-coach.sh.tmpl`
 
 These and other "managed" scripts show up like this:
 
 ```bash
 $ chezmoi managed | grep '\.sh$'
-.eget.toml.sh
-install-packages.sh
+once_dot_strategy-coach.sh
 ```
 
 #### Force the chezmoi-managed script execution to Install / Update
 
 If you ever need to run chezmoi-managed scripts "manually" or forcefully install
-the tools mentioned in this script to latest version. you would use:
+to their latest versions:
 
 ```bash
 $ chezmoi state delete-bucket --bucket=scriptState
@@ -159,7 +149,7 @@ particular GitHub repo.
 We use `pkgx` to manage languages and utilities when deterministic
 reproducibility is not crucial and convenience is more important.
 
-For complex setups you should also check out [mise](https://mise.jdx.dev/).
+For complex setups you can also use [mise](https://mise.jdx.dev/).
 
 `pkgx` and `mise` enable tools to be installed and, more importantly, support
 multiple versions simultaneously. For example, we heavily use `Deno` for

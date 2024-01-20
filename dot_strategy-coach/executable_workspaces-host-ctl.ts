@@ -4,9 +4,6 @@ import * as colors from "https://deno.land/std@0.212.0/fmt/colors.ts";
 import { Command } from "https://deno.land/x/cliffy@v1.0.0-rc.3/command/mod.ts";
 import * as dax from "https://deno.land/x/dax@0.36.0/mod.ts";
 
-// if you want to use pkgx, use this approach
-// import { porcelain as pkgx } from "https://deno.land/x/libpkgx@v0.16/mod.ts";
-
 const $ = dax.build$({
   commandBuilder: new dax.CommandBuilder().noThrow(),
 });
@@ -14,9 +11,9 @@ const HOME = Deno.env.get("HOME") ?? ".";
 
 const localBinDest = (candidate: string) => `${HOME}/.local/bin/${candidate}`;
 
-await Deno.mkdir(`${HOME}/.local/var/log/coach-wsh`, { recursive: true });
+await Deno.mkdir(`${HOME}/.local/var/log/strategy-coach`, { recursive: true });
 const logFileDest = (candidate: string) =>
-  `${HOME}/.local/var/log/coach-wsh/${candidate}`;
+  `${HOME}/.local/var/log/strategy-coach/${candidate}`;
 
 const latestGitHubTag = async (
   repo: string,
@@ -58,14 +55,15 @@ const reportResults = async (cmd: string, result: string, logFile: string) => {
 // deno-fmt-ignore
 const setup = new Command()
   .description("Idempotent setup of all Strategy Coach Workspaces Host packages")
+  .option("--pkgx-install <package>", "Single string of space separated packages to install with pkgx")
   .option("--log-file <log-file>", "The location of the log file", {
     default: logFileDest('setup.log'),
   })
-  .action(async ({ logFile }) => {
+  .action(async ({ pkgxInstall, logFile }) => {
     const results: (string | undefined)[] = [];
 
-    console.log(colors.dim(`Setting up Strategy Coach Workspaces Host packages... (tail -f ${logFile})...`));
-
+    console.log(colors.dim(`Setting up Strategy Coach Workspaces Host packages... (tail -f ${logFile})...${pkgxInstall}`));
+    
     // use `~/.eget.toml` configuration to install GitHub packages with `eget`
     results.push((await $`${HOME}/.local/bin/eget --download-all --quiet`.stderr("piped")).stderr);
 

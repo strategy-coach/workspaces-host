@@ -11,7 +11,19 @@
 #---------------------------------------------------------------------------------
 #*****     THERE SHOULD BE NO SECRETS OR CONFIDENTIAL DATA IN THIS FILE      *****
 #---------------------------------------------------------------------------------
+# scwsh_ prefixes are for "Strategy Coach Workspaces Host" namespacing
 
 [git.credential.helper.cache]
     timeout = 2592000 # 30 days
 
+[packages.pkgx]
+    # if you have a special package to install that not everyone else might need, define those in ~/.config/chezmoi/chezmoi.toml
+    install = ["sqlite.org", "duckdb.org"]
+
+[packages.eget]
+    # if you have a special package to install that not everyone else might need, define those in ~/.config/chezmoi/chezmoi.toml
+    ["openobserve/openobserve"]
+    asset_filters = [ "linux-amd64-musl" ]
+    scwsh_repo_url = "https://github.com/openobserve/openobserve"
+    scwsh_description = "Elasticsearch/Splunk/Datadog alternative"
+    scwsh_doctor_cmd = "openobserve --version"

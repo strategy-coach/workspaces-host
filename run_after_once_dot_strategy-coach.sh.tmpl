@@ -50,5 +50,5 @@ curl -fsSL https://mise.jdx.dev/install.sh | MISE_QUIET=true sh
 # executable_workspaces-host-ctl.ts hash: {{ include "dot_strategy-coach/executable_workspaces-host-ctl.ts" | sha256sum }}
 # dot_eget.toml.tmpl hash: {{ include "dot_eget.toml.tmpl" | sha256sum }}
 
-~/.local/bin/deno run -A --unstable ~/.strategy-coach/workspaces-host-ctl.ts setup \
+~/.local/bin/deno run -A ~/.strategy-coach/workspaces-host-ctl.ts setup \
     --pkgx-install="$pkgx_user_packages {{ .packages.pkgx.install | join " " }}"

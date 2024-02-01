@@ -3,5 +3,5 @@
 
 # Deno is a core requirement of Coach Workspaces so we provide some aliases
 
-alias deno-run="deno run -A --unstable"
-alias deno-test="deno test -A --unstable"
+alias deno-run="deno run -A"
+alias deno-test="deno test -A"

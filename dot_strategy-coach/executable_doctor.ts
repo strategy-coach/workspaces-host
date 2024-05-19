@@ -219,6 +219,38 @@ export const checkup = doctor(function* () {
       },
     };
   });
+  const javaHome = Deno.env.get("JAVA_HOME");
+  if (javaHome) {
+    yield doctorCategory(
+      `Java (${javaHome})`,
+      function* () {
+        yield {
+          diagnose: async (report) => {
+            await report({
+              ensure: {
+                cmd: "java",
+                cmdVersion: async (cmd) =>
+                  (await $`${cmd} --version`.lines())[0],
+              },
+            });
+            await report({
+              ensure: {
+                cmd: "mvn",
+                cmdVersion: async (cmd) =>
+                  (await $`${cmd} --version`.lines())[0],
+              },
+            });
+          },
+        };
+      },
+    );
+  } else {
+    console.info(
+      colors.dim(
+        `Use \`setup-java-amazon-corretto\` to install Java (see ~/.config/fish/functions/setup-java-amazon-corretto.fish)\nUse \`inspect-java-home-env\` to help with JAVA_HOME value.`,
+      ),
+    );
+  }
 });
 
 if (import.meta.main) {

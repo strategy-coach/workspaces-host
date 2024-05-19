@@ -213,6 +213,9 @@ highlights:
   observabilty tools for SOC2 and other compliance requirements.
 - We use `OpenObserve` for metrics, tracing, logging and similar application
   lifecycle obsverability.
+- Use `setup-java-amazon-corretto` function
+  (`~/.config/fish/functions/setup-java-amazon-corretto.fish`) to install
+  opinionated Java. Use `inspect-java-home-env` to help with JAVA_HOME value.
 
 ## Environment Variables
 

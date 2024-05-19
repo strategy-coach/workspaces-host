@@ -45,6 +45,14 @@ pkgx_user_packages="{{ .packages.pkgx.user.install | join " " }}"
 # mise-en-place dev tools, env vars, task runner
 curl -fsSL https://mise.jdx.dev/install.sh | MISE_QUIET=true sh
 
+# SDKMAN! Software Development Kit Manager (https://sdkman.io/)
+if [ -d "$HOME/.sdkman" ]; then
+	echo "SDKMAN! found."
+else
+    curl -s "https://get.sdkman.io" | bash
+    # use `sdk` defined in ~/.config/fish/functions/sdk.fish
+fi
+
 # For any chezmoi-managed config files this script depend on, we grab the SHA256 for the dependency.
 # See https://www.chezmoi.io/user-guide/use-scripts-to-perform-actions/#install-packages-with-scripts;
 # executable_workspaces-host-ctl.ts hash: {{ include "dot_strategy-coach/executable_workspaces-host-ctl.ts" | sha256sum }}

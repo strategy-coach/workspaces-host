@@ -45,7 +45,7 @@ tasks (like for engineering environments):
 ```bash
 sudo apt-get -qq update && sudo apt-get install -qq -y curl wget
 curl -fsSL https://raw.githubusercontent.com/sigoden/upt/main/install.sh | sudo sh -s -- --to /usr/local/bin
-sudo upt install -y unzip git git-extras libatomic1 jq
+sudo upt install -y zip unzip git git-extras libatomic1 jq
 curl -Ssf https://pkgx.sh | sh
 pkgx install fishshell.com deno.land eget direnv.net crates.io/zoxide crates.io/exa github.com/gopasspw/gopass
 echo "$HOME/.local/bin/fish" | sudo tee -a /etc/shells
@@ -201,6 +201,7 @@ highlights:
 - We use [pkgx](https://pkgx.sh) and its _Shell Integration_ plus `dev` modes
   for typical tools isolation.
 - We use [mise](https://mise.jdx.dev/) for complex tools.
+- We use [SDKMAN!](https://sdkman.io/) for Java and its ecosystem SDKs.
 - We use [deno](https://deno.land) for custom scripting and `dax` command runner
   to execute tasks. We favor `deno` over `make` for new packages but `make` is
   still a great tool for legacy requirements. If we create complex scripts that
@@ -215,7 +216,8 @@ highlights:
   lifecycle obsverability.
 - Use `setup-java-amazon-corretto` function
   (`~/.config/fish/functions/setup-java-amazon-corretto.fish`) to install
-  opinionated Java. Use `inspect-java-home-env` to help with JAVA_HOME value.
+  opinionated Java. `~/.config/fish/conf.d/java.fish` has `JAVA_HOME` set to
+  default SDKMAN! configuration.
 
 ## Environment Variables
 

@@ -218,6 +218,7 @@ highlights:
   (`~/.config/fish/functions/setup-java-amazon-corretto.fish`) to install
   opinionated Java. `~/.config/fish/conf.d/java.fish` has `JAVA_HOME` set to
   default SDKMAN! configuration.
+- Use `pkgx install node npm` to install NodeJS.  
 
 ## Environment Variables
 

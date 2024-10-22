@@ -4,6 +4,10 @@ This is our opinionated [chezmoi](https://www.chezmoi.io/)-based "workspaces
 host" (or "engineering sandbox home") setup for polyglot software development or
 any other "creator tasks" that are performed on Linux-like operating systems.
 
+NOTE: If you'd like to use <i>Workspaces Host</i> within a Windows DevBox WSL
+instance, we recommend using [github.com/microsoft/windows-dev-box-setup-scripts](https://github.com/microsoft/windows-dev-box-setup-scripts) 
+to setup a "clean" opinionated workstation.
+
 See [chezmoi.toml Example](.chezmoi.toml.tmpl) to help understand the variables
 that can be set and used across chezmoi templates.
 

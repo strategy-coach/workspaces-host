@@ -33,11 +33,20 @@ preferred distro:
 ```powershell
 $ wsl --unregister Debian
 $ wsl --install -d Debian
+
+# if you want to use a different name
+$ wsl --install -d Debian --name Debian_08_2025
 ```
 
 You should be able to run this repo in any user account.
 
 ## One-time setup
+
+If you want to upgrade Debian 12 to 13 (until WSL does it automatically)
+
+```bash
+sudo sed -i 's/bookworm/trixie/g' /etc/apt/sources.list && sudo apt update && sudo apt -qq -y full-upgrade && sudo apt --purge -qq -y autoremove
+```
 
 Install `curl` and `wget` using OS package manager before continuing. This
 should be the only distro-specific installation required.
@@ -49,11 +58,11 @@ tasks (like for engineering environments):
 ```bash
 sudo apt-get -qq update && sudo apt-get install -qq -y curl wget
 curl -fsSL https://raw.githubusercontent.com/sigoden/upt/main/install.sh | sudo sh -s -- --to /usr/local/bin
-sudo apt-get install -qq -y zip unzip git git-extras libatomic1 jq
+for pkg in zip unzip git git-extras libatomic1 jq; do sudo upt install -y "$pkg"; done
 curl -Ssf https://pkgx.sh | sh
-pkgx install fishshell.com deno.land eget direnv.net crates.io/zoxide crates.io/exa github.com/gopasspw/gopass
+pkgm install fishshell.com deno.land eget direnv.net crates.io/zoxide crates.io/exa github.com/gopasspw/gopass
 echo "$HOME/.local/bin/fish" | sudo tee -a /etc/shells
-sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init strategy-coach/workspaces-host
+cd && sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init strategy-coach/workspaces-host
 ```
 
 At this point the basic infrastructure and required packages as well as Coach

@@ -190,6 +190,7 @@ export const checkup = doctor(function* () {
               `${cmd} ${(await $`${cmd} --version`.text())}`,
           },
         });
+        await report({ ensure: { cmd: "surveilr" } });
         await report({ ensure: { cmd: "openobserve" } });
       },
     };

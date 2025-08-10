@@ -25,6 +25,12 @@
 # - the keys `scwsh_*` are not recognized by `eget`, the Strategy Coach Workspaces documentation
 #   system uses those for coach-doctor.
 
+["opsfolio/releases.opsfolio.com"]
+asset_filters = [ "tar.gz" ]
+scwsh_repo_url = "https://github.com/opsfolio/releases.opsfolio.com"
+scwsh_description = "Resource Surveillance and Integration Engine (surveilr)"
+scwsh_doctor_cmd = "surveilr --version"
+
 # TODO: the openobserve binaries are no longer in Git (SNS 08-09-2025), figure out another way to install
 #["openobserve/openobserve"]
 #asset_filters = [ "linux-amd64-musl" ]

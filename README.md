@@ -5,6 +5,8 @@ setup for creating a personal, scriptable, and reproducible "engineering
 sandbox" — a home base where you can do software development, creative
 automation, or any other "maker" tasks in a Linux-like environment.
 
+👉 If you need a Workspace Host document to feed context into an AI engine, use <mark>[README.prompt.md](README.prompt.md)</mark>.
+
 It’s designed for polyglot workflows — meaning it supports multiple programming
 languages and toolchains — but it’s just as valuable for creators who want a
 clean, automated setup for things like:

@@ -2,17 +2,20 @@
 # To modify, use `chezmoi edit ~/.config/fish/conf.d/chezmoi.fish --apply`. 
 
 {{- if (index . "github") }}
-{{- if (index . "github" "user") }}
-{{- if (index . "github" "user" "prime" "pat") }}
+{{-   if (index . "github" "user") }}
+{{-     if (index . "github" "user" "prime") }}
+{{-       if (index . "github" "user" "prime" "pat") }}
 export CHEZMOI_GITHUB_ACCESS_TOKEN="{{ .github.user.prime.pat }}"
-{{- else}}
+{{-       else}}
 # '.github.user.prime.pat' required in chezmoi.toml if this is desired:
 #export CHEZMOI_GITHUB_ACCESS_TOKEN="..."
-{{- end}}
-{{- end}}
+{{-       end}}
+{{-     end}}
+{{-   end}}
 {{- end}}
 
-~/.local/bin/chezmoi completion fish | source
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+$HOMEBREW_PREFIX/bin/chezmoi completion fish | source
 
-alias code-chezmoi "code $(~/.local/bin/chezmoi source-path)"
-alias chez ~/.local/bin/chezmoi
+alias code-chezmoi "code $($HOMEBREW_PREFIX/bin/chezmoi source-path)"
+alias chez $HOMEBREW_PREFIX/bin/chezmoi

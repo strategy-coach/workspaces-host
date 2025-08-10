@@ -8,9 +8,8 @@ const $ = dax.build$({
   commandBuilder: new dax.CommandBuilder().noThrow(),
 });
 const HOME = Deno.env.get("HOME") ?? ".";
-const HOMEBREW_PREFIX = Deno.env.get("HOMEBREW_PREFIX") ?? "/home/linuxbrew/.linuxbrew";
-
-console.log(`HOMEBREW_PREFIX = "${HOMEBREW_PREFIX}"`);
+const HOMEBREW_PREFIX = Deno.env.get("HOMEBREW_PREFIX") ??
+  "/home/linuxbrew/.linuxbrew";
 
 const localBinDest = (candidate: string) => `${HOME}/.local/bin/${candidate}`;
 
@@ -44,8 +43,14 @@ async function ensureTextFile(
   return undefined; // success
 }
 
-const reportResults = async (cmd: string, result: string, logFile: string) => {
+const reportResults = async (
+  cmd: string,
+  context: string[],
+  result: string,
+  logFile: string,
+) => {
   if (result.trim().length > 0) {
+    result = `${context}\n---\n\n`;
     await Deno.writeTextFile(logFile, result);
     // deno-fmt-ignore
     console.log(colors.red(`🚫 ${cmd} encountered errors or warnings (${colors.brightRed(`see ${logFile}`)}).`));
@@ -58,15 +63,28 @@ const reportResults = async (cmd: string, result: string, logFile: string) => {
 // deno-fmt-ignore
 const setup = new Command()
   .description("Idempotent setup of all Strategy Coach Workspaces Host packages")
-  .option("--homebrew-install <package>", "Single string of space separated packages to install with brew")
-  .option("--pkgx-install <package>", "Single string of space separated packages to install with pkgx")
+  .option("--homebrew-install <brew-package>", "Single string of space separated packages to install with brew")
+  .option("--pkgx-install <pkgx-package>", "Single string of space separated packages to install with pkgx")
   .option("--log-file <log-file>", "The location of the log file", {
     default: logFileDest('setup.log'),
   })
-  .action(async ({ pkgxInstall, homebrewInstall, logFile }) => {
-    const homebrewInstallPkgs = homebrewInstall?.split(/\s+/).filter(p => p.trim().length> 0) ?? [];
-    const pkgxInstallPkgs = pkgxInstall?.split(/\s+/).filter(p => p.trim().length> 0) ?? [];
+  .action(async ({ homebrewInstall, pkgxInstall, logFile }) => {
+    const context: string[] = [];
     const results: (string | undefined)[] = [];
+    context.push(`HOMEBREW_PREFIX = "${HOMEBREW_PREFIX}"`);
+    context.push(`--homebrew-install = "${homebrewInstall}"`);
+    context.push(`--pkgx-install = "${pkgxInstall}"`);
+    context.push(`--log-file = "${logFile}"`);
+
+    // to help be more explicit, we accept NO_USER_PACKAGES token for clarity
+    if(homebrewInstall == "NO_USER_PACKAGES") homebrewInstall = undefined;
+    if(pkgxInstall == "NO_USER_PACKAGES") pkgxInstall = undefined;
+
+    const homebrewInstallPkgs = homebrewInstall?.split(/\s+/).filter(p => p.trim().length > 0) ?? [];
+    const pkgxInstallPkgs = pkgxInstall?.split(/\s+/).filter(p => p.trim().length > 0) ?? [];
+
+    context.push(`homebrewInstallPkgs = [${homebrewInstallPkgs}]`);
+    context.push(`pkgxInstallPkgs = [${pkgxInstallPkgs}]`);
 
     console.log(colors.dim(`Setting up Strategy Coach Workspaces Host packages... (tail -f ${logFile})...`));
 
@@ -81,7 +99,7 @@ const setup = new Command()
     }
 
     // use `~/.eget.toml` configuration to install GitHub packages with `eget`
-    results.push((await $`${HOME}/.local/bin/eget --download-all --quiet`.stderr("piped")).stderr);
+    results.push((await $`${HOMEBREW_PREFIX}/bin/eget --download-all --quiet`.stderr("piped")).stderr);
 
     // Netspective Labs SQLa `pgpass.ts` parses and allows PostgreSQL connection lookups
     results.push((await $`${HOMEBREW_PREFIX}/bin/deno install -A -f --global --quiet https://raw.githubusercontent.com/netspective-labs/sql-aide/${await latestGitHubTag('netspective-labs/sql-aide')}/lib/postgres/pgpass/pgpass.ts`.stderr("piped")).stderr);
@@ -91,7 +109,7 @@ const setup = new Command()
     results.push(await ensureTextFile('https://raw.githubusercontent.com/kamranahmedse/git-standup/master/git-standup', localBinDest('git-standup'), true))
 
     // find all non-null strings from the output and put them into a single string
-    reportResults('setup', results.filter(l => l).map(l => l?.trim()).filter(l => l ? (l.length > 0) : false).join("\n\n"), logFile);
+    reportResults('setup', context, results.filter(l => l).map(l => l?.trim()).filter(l => l ? (l.length > 0) : false).join("\n\n"), logFile);
   });
 
 await new Command()

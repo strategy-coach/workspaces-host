@@ -5,7 +5,8 @@ host" (or "engineering sandbox home") setup for polyglot software development or
 any other "creator tasks" that are performed on Linux-like operating systems.
 
 NOTE: If you'd like to use <i>Workspaces Host</i> within a Windows DevBox WSL
-instance, we recommend using [github.com/microsoft/windows-dev-box-setup-scripts](https://github.com/microsoft/windows-dev-box-setup-scripts) 
+instance, we recommend using
+[github.com/microsoft/windows-dev-box-setup-scripts](https://github.com/microsoft/windows-dev-box-setup-scripts)
 to setup a "clean" opinionated workstation.
 
 See [chezmoi.toml Example](.chezmoi.toml.tmpl) to help understand the variables
@@ -52,8 +53,8 @@ Install `curl` and `wget` using OS package manager before continuing. This
 should be the only distro-specific installation required.
 
 Once you've got `wget` and `curl`, continue installing `upt` (a univeral CLI
-which installs native packages) and `brew` for more creator friendly package management
-tasks (like for engineering environments):
+which installs native packages) and `brew` for more creator friendly package
+management tasks (like for engineering environments):
 
 ```bash
 # initial `cd` required to go into WSL filesystem instead of WindowsFS
@@ -82,6 +83,7 @@ default shell, setting up prompt decorations, and endpoint observability
 ```bash
 chezmoi apply
 ~/.strategy-coach/finalize-setup
+echo "/home/linuxbrew/.linuxbrew/bin/fish" | sudo tee -a /etc/shells
 chsh -s /home/linuxbrew/.linuxbrew/bin/fish
 exit
 ```
@@ -166,8 +168,8 @@ reproducibility is not crucial and convenience is more important.
 
 For complex setups you can also use [mise](https://mise.jdx.dev/).
 
-`brew`, `pkgx` and `mise` enable tools to be installed and, more importantly, support
-multiple versions simultaneously. For example, we heavily use `Deno` for
+`brew`, `pkgx` and `mise` enable tools to be installed and, more importantly,
+support multiple versions simultaneously. For example, we heavily use `Deno` for
 multiple projects but each project might require a different version. `pkgx` and
 `mise` support global, per session, and per project (directory) version
 configuration strategy.
@@ -201,8 +203,8 @@ If you're using `mise` you should use the built-in `direnv`-like capability in
 ## Conventions
 
 - All packages managed by Homebrew are in `/home/linuxbrew/.linuxbrew` and if
-  you're scripting anything use that absolute path unless `$HOMEBREW_PREFIX`
-  is available in that context.
+  you're scripting anything use that absolute path unless `$HOMEBREW_PREFIX` is
+  available in that context.
 - We use `$HOME/.local/bin` for binaries whenever possible instead globally
   installing them using `sudo`.
 - We use `direnv` and per-directory `.envrc` to help manage secrets and
@@ -216,7 +218,8 @@ highlights:
 - We use [fish shell](https://fishshell.com/) for our CLI.
 - We use `git` and `git-extras` and define many `git-*` individual scripts (e.g.
   `mGit`) because we're a GitOps shop.
-- We use [Homebrew](https://brew.sh/) and [Homebrew Formulae](https://formulae.brew.sh/).
+- We use [Homebrew](https://brew.sh/) and
+  [Homebrew Formulae](https://formulae.brew.sh/).
 - We use [pkgx](https://pkgx.sh) and its _Shell Integration_ plus `dev` modes
   for typical tools isolation.
 - We use [mise](https://mise.jdx.dev/) for complex tools.

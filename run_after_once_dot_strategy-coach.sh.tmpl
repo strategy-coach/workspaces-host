@@ -16,11 +16,13 @@ set -uo pipefail
 #   chezmoi apply
 # -------------------------------------------------------------------------------------------------
 
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 {{- if (index . "github") }}
 {{-   if (index . "github" "user") }}
 {{-     if (index . "github" "user" "prime" "pat") }}
-# set this so that `pkgx` and other commands that need to access the GitHub API can use it (helps
-# prevent GitHub rate-limiting based issues)
+# set this so that `brew`, `pkgx` and other commands that need to access the GitHub API can use it
+# (helps prevent GitHub rate-limiting based issues)
 export GITHUB_API_TOKEN="{{ .github.user.prime.pat }}"
 {{-     else}}
 # '.github.user.prime.pat' required in chezmoi.toml if this is desired:
@@ -29,12 +31,19 @@ export GITHUB_API_TOKEN="{{ .github.user.prime.pat }}"
 {{-   end}}
 {{- end}}
 
+homebrew_user_packages=""
+{{- if (index . "packages") }}
+{{-   if (index . "packages" "homebrew" "user") }}
+{{-     if (index . "packages" "homebrew" "user" "install") }}
+homebrew_user_packages="{{ .packages.homebrew.user.install | join " " }}"
+{{-     end}}
+{{-   end}}
+{{- end}}
+
 pkgx_user_packages=""
 {{- if (index . "packages") }}
 {{-   if (index . "packages" "pkgx" "user") }}
 {{-     if (index . "packages" "pkgx" "user" "install") }}
-# set this so that `pkgx` and other commands that need to access the GitHub API can use it (helps
-# prevent GitHub rate-limiting based issues)
 pkgx_user_packages="{{ .packages.pkgx.user.install | join " " }}"
 {{-     end}}
 {{-   end}}
@@ -58,5 +67,7 @@ fi
 # executable_workspaces-host-ctl.ts hash: {{ include "dot_strategy-coach/executable_workspaces-host-ctl.ts" | sha256sum }}
 # dot_eget.toml.tmpl hash: {{ include "dot_eget.toml.tmpl" | sha256sum }}
 
-~/.local/bin/deno run -A ~/.strategy-coach/workspaces-host-ctl.ts setup \
-    --pkgx-install="$pkgx_user_packages {{ .packages.pkgx.install | join " " }}"
+# Homebrew should be in the path now
+deno run -A ~/.strategy-coach/workspaces-host-ctl.ts setup \
+    --pkgx-install="$pkgx_user_packages {{ .packages.pkgx.install | join " " }}" \
+    --brew-install="$homebrew_user_packages {{ .packages.homebrew.install | join " " }}"

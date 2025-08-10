@@ -159,6 +159,7 @@ export const checkup = doctor(function* () {
               `${cmd} ${await $`${cmd} --version`.text()}`,
           },
         });
+        await report({ ensure: { cmd: "brew" } });
         await report({ ensure: { cmd: "pkgx" } });
         await report({
           ensure: {

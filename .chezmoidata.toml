@@ -16,6 +16,12 @@
 [git.credential.helper.cache]
     timeout = 2592000 # 30 days
 
-[packages.pkgx]
+# Use Homebrew Formulae for common tools that don't need to be versioned
+[packages.homebrew]
     # if you have a special package to install that not everyone else might need, define those in ~/.config/chezmoi/chezmoi.toml
-    install = ["sqlite.org", "duckdb.org"]
+    install = ["oh-my-posh", "sqlite", "duckdb"]
+
+# Use pkgx common tools that need to be versioned (like NVM or Pythong versioning)
+# [packages.pkgx]
+    # if you have a special package to install that not everyone else might need, define those in ~/.config/chezmoi/chezmoi.toml
+#    install = ["node", "npm"]

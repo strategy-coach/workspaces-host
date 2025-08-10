@@ -52,17 +52,19 @@ Install `curl` and `wget` using OS package manager before continuing. This
 should be the only distro-specific installation required.
 
 Once you've got `wget` and `curl`, continue installing `upt` (a univeral CLI
-which installs native packages) and `pkgx` for more complex package management
+which installs native packages) and `brew` for more creator friendly package management
 tasks (like for engineering environments):
 
 ```bash
-sudo apt-get -qq update && sudo apt-get install -qq -y curl wget
+# initial `cd` required to go into WSL filesystem instead of WindowsFS
+cd && sudo apt-get -qq update && sudo apt-get install -qq -y curl wget
 curl -fsSL https://raw.githubusercontent.com/sigoden/upt/main/install.sh | sudo sh -s -- --to /usr/local/bin
-for pkg in zip unzip git git-extras libatomic1 jq; do sudo upt install -y "$pkg"; done
+for pkg in zip unzip git git-extras libatomic1 jq build-essential; do sudo upt install -y "$pkg"; done
+ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+brew install gcc fish chezmoi deno eget direnv zoxide eza gopass
 curl -Ssf https://pkgx.sh | sh
-pkgm install fishshell.com deno.land eget direnv.net crates.io/zoxide crates.io/exa github.com/gopasspw/gopass
-echo "$HOME/.local/bin/fish" | sudo tee -a /etc/shells
-cd && sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init strategy-coach/workspaces-host
+chezmoi init strategy-coach/workspaces-host
 ```
 
 At this point the basic infrastructure and required packages as well as Coach
@@ -78,9 +80,9 @@ default shell, setting up prompt decorations, and endpoint observability
 (osquery, et. al.):
 
 ```bash
-~/.local/bin/chezmoi apply
+chezmoi apply
 ~/.strategy-coach/finalize-setup
-chsh -s ~/.local/bin/fish
+chsh -s /home/linuxbrew/.linuxbrew/bin/fish
 exit
 ```
 
@@ -153,18 +155,18 @@ scripts instead of using memoized state.
 ## GitHub Binary Releases Management
 
 We use [eget](https://github.com/zyedidia/eget) to install prebuilt binaries
-from GitHub when `pkgx` does not have a package in its pantry. `eget` works
+from GitHub when `brew` does not have a package in its Formulae. `eget` works
 great when all we care about is the latest version of a single binary from a
 particular GitHub repo.
 
 ## Polyglot Languages Installation and Directory-specific Version Management
 
-We use `pkgx` to manage languages and utilities when deterministic
+We use `brew` to manage languages and utilities when deterministic
 reproducibility is not crucial and convenience is more important.
 
 For complex setups you can also use [mise](https://mise.jdx.dev/).
 
-`pkgx` and `mise` enable tools to be installed and, more importantly, support
+`brew`, `pkgx` and `mise` enable tools to be installed and, more importantly, support
 multiple versions simultaneously. For example, we heavily use `Deno` for
 multiple projects but each project might require a different version. `pkgx` and
 `mise` support global, per session, and per project (directory) version
@@ -198,6 +200,9 @@ If you're using `mise` you should use the built-in `direnv`-like capability in
 
 ## Conventions
 
+- All packages managed by Homebrew are in `/home/linuxbrew/.linuxbrew` and if
+  you're scripting anything use that absolute path unless `$HOMEBREW_PREFIX`
+  is available in that context.
 - We use `$HOME/.local/bin` for binaries whenever possible instead globally
   installing them using `sudo`.
 - We use `direnv` and per-directory `.envrc` to help manage secrets and
@@ -211,6 +216,7 @@ highlights:
 - We use [fish shell](https://fishshell.com/) for our CLI.
 - We use `git` and `git-extras` and define many `git-*` individual scripts (e.g.
   `mGit`) because we're a GitOps shop.
+- We use [Homebrew](https://brew.sh/) and [Homebrew Formulae](https://formulae.brew.sh/).
 - We use [pkgx](https://pkgx.sh) and its _Shell Integration_ plus `dev` modes
   for typical tools isolation.
 - We use [mise](https://mise.jdx.dev/) for complex tools.
@@ -231,7 +237,8 @@ highlights:
   (`~/.config/fish/functions/setup-java-amazon-corretto.fish`) to install
   opinionated Java. `~/.config/fish/conf.d/java.fish` has `JAVA_HOME` set to
   default SDKMAN! configuration.
-- Use `pkgx install node npm` to install NodeJS.  
+- Use Homebrew to install NodeJS globally or `pkgx install node npm` to install
+  versioned NodeJS locally in your environment.
 
 ## Environment Variables
 

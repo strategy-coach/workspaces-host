@@ -54,6 +54,11 @@
         site = "https://git.example.com"
         env_var_name_prefix = "GIT_CRED_GIT_EXAMPLE_COM_"
 
+    # typical Homebrew packages are "universal" and defined in `.chezmoidata.toml`; add list of strings in 
+    # `data.packages.homebrew.user.install` if you want some personal packages installed by `brew`;
+    # [data.packages.homebrew.user]
+    #     install = ["mypkg1", "mypkg2"]
+
     # typical pkgx packages are "universal" and defined in `.chezmoidata.toml`; add list of strings in 
     # `data.packages.pkgx.user.install` if you want some personal packages installed by `pkgx`;
     # [data.packages.pkgx.user]

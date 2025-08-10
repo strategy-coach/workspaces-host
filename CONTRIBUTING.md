@@ -44,7 +44,7 @@ A project is only as useful as its documentation so if you contribute to or
 modify code in this repo be sure to document it using this priority:
 
 - Follow guidance and conventions for Fish (e.g. use `~/.config/fish/*`
-  locations), `chezmoi`, `pkgx`, `direnv`, etc. so that developers can easily
+  locations), `chezmoi`, `brew`, `pkgx`, `direnv`, etc. so that developers can easily
   understand your work
 - Add comments to scripts that explain not just what is being done but, more
   importantly, _why_

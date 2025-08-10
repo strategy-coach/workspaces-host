@@ -61,7 +61,7 @@ management tasks (like for engineering environments):
 cd && sudo apt-get -qq update && sudo apt-get install -qq -y curl wget
 curl -fsSL https://raw.githubusercontent.com/sigoden/upt/main/install.sh | sudo sh -s -- --to /usr/local/bin
 for pkg in zip unzip git git-extras libatomic1 jq build-essential; do sudo upt install -y "$pkg"; done
- /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install gcc fish chezmoi deno eget direnv zoxide eza gopass
 curl -Ssf https://pkgx.sh | sh
@@ -83,8 +83,8 @@ default shell, setting up prompt decorations, and endpoint observability
 ```bash
 chezmoi apply
 ~/.strategy-coach/finalize-setup
-echo "/home/linuxbrew/.linuxbrew/bin/fish" | sudo tee -a /etc/shells
-chsh -s /home/linuxbrew/.linuxbrew/bin/fish
+echo "$HOMEBREW_PREFIX/bin/fish" | sudo tee -a /etc/shells
+chsh -s $HOMEBREW_PREFIX/bin/fish
 exit
 ```
 

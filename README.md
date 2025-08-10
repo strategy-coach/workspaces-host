@@ -18,7 +18,9 @@ because the core tools — Fish Shell, Homebrew, chezmoi, pkgx, mise — are ful
 cross-platform.
 
 See [chezmoi.toml Example](.chezmoi.toml.tmpl) to help understand the variables
-that can be set and used across chezmoi templates.
+that can be set and used across chezmoi templates. <mark>The `.chezmoi.toml.tmpl`
+file generates `~/.config/chezmoi/chemoi.toml` during installation</mark> but 
+then it is never modified by anyone other than the Workspaces Host owner. 
 
 ## Why we call it a "Workspaces Host"
 
@@ -148,11 +150,6 @@ coach-doctor
 
 `coach-doctor` is a Deno script which checks that all our dependencies are
 available.
-
-Here’s the rewritten version with a clear explanation of why portable secrets
-management matters, grounded in what the README already says:
-
----
 
 ## Secrets Management
 

@@ -102,7 +102,7 @@ const setup = new Command()
     results.push((await $`${HOMEBREW_PREFIX}/bin/eget --download-all --quiet`.stderr("piped")).stderr);
 
     // Netspective Labs SQLa `pgpass.ts` parses and allows PostgreSQL connection lookups
-    results.push((await $`${HOMEBREW_PREFIX}/bin/deno install -A -f --global --quiet https://raw.githubusercontent.com/netspective-labs/sql-aide/${await latestGitHubTag('netspective-labs/sql-aide')}/lib/postgres/pgpass/pgpass.ts`.stderr("piped")).stderr);
+    results.push((await $`${HOMEBREW_PREFIX}/bin/deno install -A -f --root ${HOME}/.local/bin --global --quiet https://raw.githubusercontent.com/netspective-labs/sql-aide/${await latestGitHubTag('netspective-labs/sql-aide')}/lib/postgres/pgpass/pgpass.ts`.stderr("piped")).stderr);
 
     results.push(await ensureTextFile('https://raw.githubusercontent.com/pnikosis/semtag/master/semtag', localBinDest('git-semtag'), true))
     results.push(await ensureTextFile('https://raw.githubusercontent.com/fboender/multi-git-status/master/mgitstatus', localBinDest('git-mgitstatus'), true))

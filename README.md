@@ -268,6 +268,119 @@ logs.
 The Fish alias `coach-doctor` executes `doctor.ts`, which defines a reusable
 reporting framework to test tool availability and versions.
 
+### Source code
+
+Legend
+
+- 🟧 template: processed by chezmoi apply to generate a target file
+- ⬜ copy: file is copied verbatim into the destination
+
+Root level
+
+- 🟧 `dot_gitconfig.tmpl` → `~/.gitconfig` – injects user name, email,
+  credential helpers, and optional GitHub token‐based URL rewriting
+- 🟧 `dot_eget.toml.tmpl` → `~/.eget.toml` – configures eget downloads and notes
+  that edits trigger package installs via a post‑apply script
+- 🟧 `dot_psqlrc.tmpl` → `~/.psqlrc` – supplies a rich PostgreSQL CLI setup with
+  custom prompts, history, and handy queries
+- 🟧 `run_after_once_dot_strategy-coach.sh.tmpl` →
+  `~/.chezmoiscripts/run_after_once_dot_strategy-coach.sh` – idempotent
+  bootstrap script that installs tools with Homebrew/pkgx and then runs the Deno
+  controller
+- ⬜ `create_private_dot_pgpass` – example `~/.pgpass` showing how to store
+  connection details with metadata for helper tooling
+- ⬜ `coach-pre-process.ts` – Deno utility that rewrites “edit with chezmoi”
+  hints inside source files so contributors know the correct target path
+
+`dot_config/direnv` directory:
+
+- 🟧 direnv.toml.tmpl → ~/.config/direnv/direnv.toml – whitelists ~/workspaces
+  to avoid repeated direnv allow prompts
+- ⬜ direnvrc – customizes direnv’s log format for quieter output
+
+`dot_config/fish` directory:
+
+- ⬜ `config.fish` – bootstraps Homebrew paths, sets cache directories, and
+  loads Oh My Posh, `direnv`, `zoxide`, and `mise` on shell startup
+
+`conf.d` snippets directory:
+
+- 🟧 `strategy-coach.fish.tmpl` → `~/.config/fish/conf.d/strategy-coach.fish` –
+  exports Strategy Coach flags, emits Git credential env vars, detects WSL, and
+  provides aliases like coach-doctor
+- 🟧 `chezmoi.fish.tmpl` → `~/.config/fish/conf.d/chezmoi.fish` – sets
+  CHEZMOI_GITHUB_ACCESS_TOKEN, loads completions, and defines `chez` and
+  `code-chezmoi` shortcuts
+- 🟧 `ssh-agent-auto.fish.tmpl` → `~/.config/fish/conf.d/ssh-agent-auto.fish` –
+  auto-starts ssh-agent and adds ~/.ssh/id_rsa at login
+- ⬜ `deno.fish` – convenience aliases for running or testing Deno scripts
+- ⬜ `direnv.fish` – hooks direnv into Fish via Homebrew’s direnv binary
+- ⬜ `fs.fish` – file-system helpers like ll (eza) and lsl (classic ls)
+- ⬜ `java.fish` – sets JAVA_HOME for SDKMAN‑managed Java
+
+`functions` directory:
+
+- ⬜ `fish_greeting.fish` – custom greeting (see file for details)
+- ⬜ `sdk.fish` – helper around SDKMAN!
+- ⬜ `setup-java-amazon-corretto.fish` – script to install Amazon Corretto
+
+`dot_config/oh-my-posh` directory:
+
+- ⬜ coach.omp.json – theme for Oh My Posh that shows OS icon, user, path, Git
+  status, and timing data in a multi‑segment prompt
+
+`dot_strategy-coach` directory:
+
+- ⬜ `executable_doctor.ts` – Deno CLI that verifies installed tools and prints
+  a color‑coded health report
+- ⬜ `executable_workspaces-host-ctl.ts` – orchestrates package installs via
+  Homebrew, pkgx, and eget, logging results and exposing a setup subcommand
+- 🟧 `executable_finalize-setup.tmpl` → `~/.strategy-coach/finalize-setup` –
+  optional one‑time script to install osquery via Debian package
+
+### Key Takeaways for New Contributors
+
+Templates vs. copies
+
+- Files ending in `.tmpl` are rendered by chezmoi apply with data from
+  ~/.config/chezmoi/chezmoi.toml. Review the template to understand the
+  generated file.
+- Non‑templated files are copied verbatim—still managed by chezmoi edit but
+  without variable substitution.
+
+Post-apply scripts
+
+- `run_after_once_dot_strategy-coach.sh.tmpl` fires after chezmoi apply when
+  relevant files change. Ensure any added commands remain idempotent.
+
+Deno tooling
+
+- `executable_doctor.ts` and `executable_workspaces-host-ctl.ts` illustrate
+  using Deno for cross‑platform automation. Note their use of dax and cliffy.
+
+Fish configuration
+
+- `config.fish` is the entry point; `conf.d` snippets let you add modular shell
+  behavior. Use chezmoi edit `~/.config/fish/conf.d/<file>` to modify.
+
+What to Learn Next
+
+- [chezmoi templating](https://www.chezmoi.io/user-guide/templating/): Explore
+  functions and conditionals used across .tmpl files to handle user‑specific
+  data.
+- [Fish scripting](https://fishshell.com/docs/current/language.html): Study
+  existing `conf.d` snippets and functions to create your own aliases or
+  environment setup.
+- Deno modules (dax, cliffy): These power the project’s scripting utilities;
+  learning them enables custom automation.
+- Package managers: Understand how [Homebrew](https://brew.sh/), `pkgx`, `mise`,
+  and `eget` work together in the bootstrap script.
+- Secret management: Inspect `.gitconfig` and `strategy-coach.fish.tmpl`
+  patterns for handling credentials via templates and environment variables.
+
+With these pieces, a new developer can confidently modify, extend, or
+troubleshoot the workspaces-host setup.
+
 ## Maintenance
 
 Keeping your _Workspaces Host_ up to date is important for security,

@@ -222,6 +222,52 @@ By centralizing and environment-loading secrets, you:
 - [gopass](https://www.gopass.pw/) should be used for general password
   management.
 
+## How chezmoi init and chezmoi apply work for this repository
+
+### Initialization
+
+`chezmoi init <repo>` clones the repository into `~/.local/share/chezmoi`,
+loading templates (`dot_*`), scripts (`run_after_once_*`), and helper utilities
+under `dot_strategy-coach/*`.
+
+### `chezmoi apply` idempotently updates source state
+
+Templates are rendered into the user’s home:
+
+- Git settings derive from `dot_gitconfig.tmpl`, which inserts name, email, and
+  optional credential helpers based on `chezmoi.toml` data
+- `dot_eget.toml.tmpl` configures eget downloads and records that editing this
+  file triggers a post-install script
+- Fish shell startup files set up Homebrew paths, Oh My Posh, `direnv`,
+  `zoxide`, and `mise`
+- `strategy-coach.fish.tmpl` exports environment flags, generates Git credential
+  variables, detects WSL, and defines the `coach-doctor` alias
+- `chezmoi.fish.tmpl` exposes `CHEZMOI_GITHUB_ACCESS_TOKEN`, loads completions,
+  and defines a chez shorthand
+- `direnv` is pre‑authorized for ~/workspaces via direnv.toml.tmpl
+- A starter `~/.pgpass` with usage instructions is created if missing
+- Deno utilities (`doctor.ts`, `workspaces-host-ctl.ts`, finalize-setup) are
+  installed under `~/.strategy-coach/`
+
+After files are in place, run_after_once_dot_strategy-coach.sh.tmpl runs once to
+bootstrap tooling. The script:
+
+- Is explicitly designed to rerun safely and only after chezmoi apply or when
+  its dependencies change
+- Optionally exports a GitHub token for API access
+- Builds package lists for Homebrew and `pkgx` from template data
+- Installs auxiliary tools (`mise`, SDKMAN!) and invokes the Deno controller to
+  finish setup
+
+The invoked controller (`workspaces-host-ctl.ts`) installs requested packages
+with brew/pkgx, uses eget, fetches helper scripts, and aggregates results into
+logs.
+
+### Verifying the environment
+
+The Fish alias `coach-doctor` executes `doctor.ts`, which defines a reusable
+reporting framework to test tool availability and versions.
+
 ## Maintenance
 
 Keeping your _Workspaces Host_ up to date is important for security,

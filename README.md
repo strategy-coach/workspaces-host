@@ -161,6 +161,10 @@ available.
       [Tailscale](https://github.com/tailscale/tailscale) (Headscale is server
       side) and then add [Nebula](https://github.com/slackhq/nebula) so that we
       can give opinionated options.
+  - If Tailscale or Nebula are not good enough or unable to allow tunneling of
+    local services securely to Internet for temporary reviews, etc. check out
+    [Awesome Tunneling](https://github.com/anderspitman/awesome-tunneling) for
+    other options.
 
 ## Secrets Management
 

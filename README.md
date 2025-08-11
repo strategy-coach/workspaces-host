@@ -5,7 +5,8 @@ setup for creating a personal, scriptable, and reproducible "engineering
 sandbox" — a home base where you can do software development, creative
 automation, or any other "maker" tasks in a Linux-like environment.
 
-👉 If you need a Workspace Host document to feed context into an AI engine, use <mark>[README.prompt.md](README.prompt.md)</mark>.
+👉 If you need a Workspace Host document to feed context into an AI engine, use
+<mark>[README.prompt.md](README.prompt.md)</mark>.
 
 It’s designed for polyglot workflows — meaning it supports multiple programming
 languages and toolchains — but it’s just as valuable for creators who want a
@@ -20,9 +21,10 @@ because the core tools — Fish Shell, Homebrew, chezmoi, pkgx, mise — are ful
 cross-platform.
 
 See [chezmoi.toml Example](.chezmoi.toml.tmpl) to help understand the variables
-that can be set and used across chezmoi templates. <mark>The `.chezmoi.toml.tmpl`
-file generates `~/.config/chezmoi/chemoi.toml` during installation</mark> but 
-then it is never modified by anyone other than the Workspaces Host owner. 
+that can be set and used across chezmoi templates. <mark>The
+`.chezmoi.toml.tmpl` file generates `~/.config/chezmoi/chemoi.toml` during
+installation</mark> but then it is never modified by anyone other than the
+Workspaces Host owner.
 
 ## Why we call it a "Workspaces Host"
 
@@ -153,6 +155,13 @@ coach-doctor
 `coach-doctor` is a Deno script which checks that all our dependencies are
 available.
 
+## Roadmap
+
+- [ ] Integrate Zero Trust client infrastructure starting with
+      [Tailscale](https://github.com/tailscale/tailscale) (Headscale is server
+      side) and then add [Nebula](https://github.com/slackhq/nebula) so that we
+      can give opinionated options.
+
 ## Secrets Management
 
 Portable secrets management is critical because it keeps your tokens, passwords,
@@ -173,7 +182,8 @@ The Workspaces Host is built with this in mind:
 - Keep GitHub personal access tokens in one place:
 
   - Store them in `~/.config/chezmoi/chezmoi.toml` (created at installation,
-    private to you).
+    private to you, not tracked by Git and can be used to store variables which
+    can then be inserted into generated scripts).
   - When you need to update a token, change it once here, then run:
 
     ```bash

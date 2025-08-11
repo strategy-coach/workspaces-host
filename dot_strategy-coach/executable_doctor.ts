@@ -192,6 +192,14 @@ export const checkup = doctor(function* () {
           },
         });
         await report({ ensure: { cmd: "surveilr" } });
+        await report({
+          ensure: {
+            cmd: "rclone",
+            cmdVersion: async (
+              cmd,
+            ) => ((await $`${cmd} --version`.text()).split("\n")[0]),
+          },
+        });
         await report({ ensure: { cmd: "openobserve" } });
       },
     };

@@ -157,6 +157,9 @@ available.
 
 ## Roadmap
 
+- [ ] Integrate CLI-based LLM tools and utilities such as Claude Code,
+      [llm](https://llm.datasette.io/en/stable/) and OpenAI OSS to help
+      facilitate AI coding.
 - [ ] Integrate Zero Trust client infrastructure starting with
       [Tailscale](https://github.com/tailscale/tailscale) (Headscale is server
       side) and then add [Nebula](https://github.com/slackhq/nebula) so that we

@@ -158,8 +158,10 @@ available.
 ## Roadmap
 
 - [ ] Integrate CLI-based LLM tools and utilities such as Claude Code,
-      [llm](https://llm.datasette.io/en/stable/) and OpenAI OSS to help
-      facilitate AI coding.
+      [llm](https://llm.datasette.io/en/stable/) ([Formulae](https://formulae.brew.sh/formula/llm#default)) and OpenAI OSS to help
+      facilitate AI coding. Be sure to use `brew` when possible and put API
+      keys, etc. into `chezmoi.toml` and generate it into `.envrc` where
+      necessary. e.g. 
 - [ ] Integrate Zero Trust client infrastructure starting with
       [Tailscale](https://github.com/tailscale/tailscale) (Headscale is server
       side) and then add [Nebula](https://github.com/slackhq/nebula) so that we

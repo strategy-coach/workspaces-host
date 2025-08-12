@@ -157,11 +157,16 @@ available.
 
 ## Roadmap
 
+- [ ] Integrate rclone sync'ing for sensitive files that users edit (such as
+      `chezmoi.toml`). Shahid started the
+      `dot_strategy-coach/executable_rclone-sensitive.ts` file and it needs to
+      be finalized for safe and secure operation.
 - [ ] Integrate CLI-based LLM tools and utilities such as Claude Code,
-      [llm](https://llm.datasette.io/en/stable/) ([Formulae](https://formulae.brew.sh/formula/llm#default)) and OpenAI OSS to help
-      facilitate AI coding. Be sure to use `brew` when possible and put API
-      keys, etc. into `chezmoi.toml` and generate it into `.envrc` where
-      necessary. e.g. 
+      [llm](https://llm.datasette.io/en/stable/)
+      ([Formulae](https://formulae.brew.sh/formula/llm#default)) and OpenAI OSS
+      to help facilitate AI coding. Be sure to use `brew` when possible and put
+      API keys, etc. into `chezmoi.toml` and generate it into `.envrc` where
+      necessary. e.g.
 - [ ] Integrate Zero Trust client infrastructure starting with
       [Tailscale](https://github.com/tailscale/tailscale) (Headscale is server
       side) and then add [Nebula](https://github.com/slackhq/nebula) so that we

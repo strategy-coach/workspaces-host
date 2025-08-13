@@ -157,10 +157,10 @@ available.
 
 ## Roadmap
 
-- [ ] Integrate rclone sync'ing for sensitive files that users edit (such as
-      `chezmoi.toml`). Shahid started the
+- [ ] Integrate [SyncThing](https://syncthing.net/) or rclone sync'ing for sensitive
+      files that users edit (such as `chezmoi.toml`). Shahid started the
       `dot_strategy-coach/executable_rclone-sensitive.ts` file and it needs to
-      be finalized for safe and secure operation.
+      be switched to SyncThing or finalized with rclone for safe and secure operation.
 - [ ] Integrate CLI-based LLM tools and utilities such as Claude Code,
       [llm](https://llm.datasette.io/en/stable/)
       ([Formulae](https://formulae.brew.sh/formula/llm#default)) and OpenAI OSS

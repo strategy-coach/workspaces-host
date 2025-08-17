@@ -156,7 +156,8 @@ coach-doctor
 available.
 
 ## Roadmap
-
+- [ ] Integrate [Lefthook Git hooks manager](https://lefthook.dev/) with default
+      `brew` installation and standard `lefthook.yml` locations in repos.
 - [ ] Integrate [SyncThing](https://syncthing.net/) or rclone sync'ing for sensitive
       files that users edit (such as `chezmoi.toml`). Shahid started the
       `dot_strategy-coach/executable_rclone-sensitive.ts` file and it needs to

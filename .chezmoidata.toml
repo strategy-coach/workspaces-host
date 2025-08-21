@@ -14,14 +14,14 @@
 # scwsh_ prefixes are for "Strategy Coach Workspaces Host" namespacing
 
 [git.credential.helper.cache]
-    timeout = 2592000 # 30 days
+timeout = 2592000 # 30 days
 
 # Use Homebrew Formulae for common tools that don't need to be versioned
 [packages.homebrew]
-    # if you have a special package to install that not everyone else might need, define those in ~/.config/chezmoi/chezmoi.toml
-    install = ["oh-my-posh", "sqlite", "duckdb", "rclone", "node"]
+# if you have a special package to install that not everyone else might need, define those in ~/.config/chezmoi/chezmoi.toml
+install = ["oh-my-posh", "sqlite", "duckdb", "rclone", "node", "backlog-md"]
 
 # Use pkgx common tools that need to be versioned (like NVM or Python versioning)
 # [packages.pkgx]
-    # if you have a special package to install that not everyone else might need, define those in ~/.config/chezmoi/chezmoi.toml
+# if you have a special package to install that not everyone else might need, define those in ~/.config/chezmoi/chezmoi.toml
 #    install = ["node", "npm"]

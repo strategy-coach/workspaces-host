@@ -156,12 +156,9 @@ coach-doctor
 available.
 
 ## Roadmap
+
 - [ ] Integrate [Lefthook Git hooks manager](https://lefthook.dev/) with default
       `brew` installation and standard `lefthook.yml` locations in repos.
-- [ ] Integrate [SyncThing](https://syncthing.net/) or rclone sync'ing for sensitive
-      files that users edit (such as `chezmoi.toml`). Shahid started the
-      `dot_strategy-coach/executable_rclone-sensitive.ts` file and it needs to
-      be switched to SyncThing or finalized with rclone for safe and secure operation.
 - [ ] Integrate CLI-based LLM tools and utilities such as Claude Code,
       [llm](https://llm.datasette.io/en/stable/)
       ([Formulae](https://formulae.brew.sh/formula/llm#default)) and OpenAI OSS
@@ -344,6 +341,9 @@ Root level
 
 - ⬜ `executable_doctor.ts` – Deno CLI that verifies installed tools and prints
   a color‑coded health report
+- ⬜ `executable_sensitivectl.ts` – Deno CLI that backs up/restores just a few
+  sensitive strategy coach files to local OneDrive personal vault to allow
+  restore on other workspace hosts
 - ⬜ `executable_workspaces-host-ctl.ts` – orchestrates package installs via
   Homebrew, pkgx, and eget, logging results and exposing a setup subcommand
 - 🟧 `executable_finalize-setup.tmpl` → `~/.strategy-coach/finalize-setup` –

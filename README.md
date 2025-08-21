@@ -155,6 +155,31 @@ coach-doctor
 `coach-doctor` is a Deno script which checks that all our dependencies are
 available.
 
+## Backup and Restore of sensitive files
+
+`coach-sensitivectl` Deno script backs up and restores a small set of sensitive
+files between your WSL Linux home and OneDrive Personal Vault. It exposes two
+commands: `backup-to-onedrive-vault` (WSL → Vault) and
+`restore-from-onedrive-vault` (Vault → WSL), plus a --dry-run option to preview
+actions. It auto-resolves the Vault location using $env:OneDriveCommercial or
+$env:OneDrive (or respects ONEDRIVE_VAULT_PATH if you set it), creates parent
+directories as needed, skips optional files, and fails fast with a clear message
+if the Vault isn’t unlocked.
+
+```bash
+# Backup (real)
+deno run -A strategy-coach-sensitivectl.ts backup-to-onedrive-vault
+
+# Backup (dry-run)
+deno run -A strategy-coach-sensitivectl.ts backup-to-onedrive-vault --dry-run
+
+# Restore (real)
+deno run -A strategy-coach-sensitivectl.ts restore-from-onedrive-vault
+
+# Restore (dry-run)
+deno run -A strategy-coach-sensitivectl.ts restore-from-onedrive-vault --dry-run
+```
+
 ## Roadmap
 
 - [ ] Integrate [Lefthook Git hooks manager](https://lefthook.dev/) with default

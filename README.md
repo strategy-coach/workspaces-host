@@ -348,13 +348,14 @@ Root level
   auto-starts ssh-agent and adds ~/.ssh/id_rsa at login
 - ⬜ `deno.fish` – convenience aliases for running or testing Deno scripts
 - ⬜ `direnv.fish` – hooks direnv into Fish via Homebrew’s direnv binary
-- ⬜ `fs.fish` – file-system helpers like ll (eza) and lsl (classic ls)
-- ⬜ `java.fish` – sets JAVA_HOME for SDKMAN‑managed Java
+- ⬜ `fs.fish` – file-system helpers like `ll` (eza) and `lsl` (classic ls)
+- ⬜ `git.fish` – Git helpers like `cdp` (`cd` to project root)
+- ⬜ `java.fish` – sets `JAVA_HOME` for `SDKMAN`‑managed Java
 
 `functions` directory:
 
 - ⬜ `fish_greeting.fish` – custom greeting (see file for details)
-- ⬜ `sdk.fish` – helper around SDKMAN!
+- ⬜ `sdk.fish` – helper around `SDKMAN!`
 - ⬜ `setup-java-amazon-corretto.fish` – script to install Amazon Corretto
 
 `dot_config/oh-my-posh` directory:

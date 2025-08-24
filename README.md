@@ -348,7 +348,8 @@ Root level
   auto-starts ssh-agent and adds ~/.ssh/id_rsa at login
 - ⬜ `deno.fish` – convenience aliases for running or testing Deno scripts
 - ⬜ `direnv.fish` – hooks direnv into Fish via Homebrew’s direnv binary
-- ⬜ `fs.fish` – file-system helpers like `ll` (eza) and `lsl` (classic ls)
+- ⬜ `fs.fish` – file-system helpers like `ll` (eza), `lsl` (classic ls) and
+  `serve-cwd-http` to serve current working directory via HTTP
 - ⬜ `git.fish` – Git helpers like `cdp` (`cd` to project root)
 - ⬜ `java.fish` – sets `JAVA_HOME` for `SDKMAN`‑managed Java
 

@@ -3,3 +3,6 @@
 
 alias ll='eza --long --header --git --icons'
 alias lsl='ls -alF'
+
+# start an HTTP server to serve the files in the current directory
+alias serve-cwd-http='deno run -A jsr:@std/http/file-server .'

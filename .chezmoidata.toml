@@ -19,7 +19,15 @@ timeout = 2592000 # 30 days
 # Use Homebrew Formulae for common tools that don't need to be versioned
 [packages.homebrew]
 # if you have a special package to install that not everyone else might need, define those in ~/.config/chezmoi/chezmoi.toml
-install = ["oh-my-posh", "sqlite", "duckdb", "rclone", "node", "backlog-md"]
+install = [
+    "oh-my-posh",
+    "sqlite",
+    "duckdb",
+    "rclone",
+    "node",
+    "backlog-md",
+    "sqlpage",
+]
 
 # Use pkgx common tools that need to be versioned (like NVM or Python versioning)
 # [packages.pkgx]

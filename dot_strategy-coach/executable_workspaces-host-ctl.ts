@@ -104,6 +104,11 @@ const setup = new Command()
     // Netspective Labs SQLa `pgpass.ts` parses and allows PostgreSQL connection lookups
     results.push((await $`${HOMEBREW_PREFIX}/bin/deno install -A -f --root ${HOME}/.local/bin --global --quiet https://raw.githubusercontent.com/netspective-labs/sql-aide/${await latestGitHubTag('netspective-labs/sql-aide')}/lib/postgres/pgpass/pgpass.ts`.stderr("piped")).stderr);
 
+    // GitHub Spec Kit (https://github.com/github/spec-kit) - `specify` CLI for
+    // spec-driven development; installed via `uv tool install` (idempotent,
+    // no-ops if already installed at the current version)
+    results.push((await $`${HOMEBREW_PREFIX}/bin/uv tool install specify-cli`.stderr("piped")).stderr);
+
     results.push(await ensureTextFile('https://raw.githubusercontent.com/pnikosis/semtag/master/semtag', localBinDest('git-semtag'), true))
     results.push(await ensureTextFile('https://raw.githubusercontent.com/fboender/multi-git-status/master/mgitstatus', localBinDest('git-mgitstatus'), true))
     results.push(await ensureTextFile('https://raw.githubusercontent.com/kamranahmedse/git-standup/master/git-standup', localBinDest('git-standup'), true))

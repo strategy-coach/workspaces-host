@@ -27,6 +27,7 @@ install = [
     "node",
     "backlog-md",
     "sqlpage",
+    "uv",
 ]
 
 # Use pkgx common tools that need to be versioned (like NVM or Python versioning)

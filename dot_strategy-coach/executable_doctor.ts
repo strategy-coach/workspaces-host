@@ -192,6 +192,8 @@ export const checkup = doctor(function* () {
           },
         });
         await report({ ensure: { cmd: "surveilr" } });
+        await report({ ensure: { cmd: "uv" } });
+        await report({ ensure: { cmd: "specify" } });
         await report({
           ensure: {
             cmd: "rclone",

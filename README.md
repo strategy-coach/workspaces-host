@@ -777,6 +777,11 @@ highlights:
   default SDKMAN! configuration.
 - Use Homebrew to install NodeJS globally or `pkgx install node npm` to install
   versioned NodeJS locally in your environment.
+- We use [uv](https://docs.astral.sh/uv/) to install and manage Python-based
+  CLI tools.
+- We use [GitHub Spec Kit](https://github.com/github/spec-kit)'s `specify` CLI
+  for spec-driven development (`specify init`, `specify self upgrade`, etc.),
+  installed globally via `uv tool install specify-cli`.
 
 ## Environment Variables
 
